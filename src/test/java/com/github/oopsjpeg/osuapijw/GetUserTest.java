@@ -1,8 +1,5 @@
-# osuapijw
-a Java wrapper for the osu! API. Fresh out of the oven.
+package com.github.oopsjpeg.osuapijw;
 
-## Example 1 - GetUserTest
-```java
 import java.io.IOException;
 
 import com.github.oopsjpeg.osuapijw.Gamemode;
@@ -43,4 +40,3 @@ public class GetUserTest {
 		}
 	}
 }
-```
