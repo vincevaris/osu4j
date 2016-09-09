@@ -1,13 +1,13 @@
-# osuapijw
-a Java wrapper for the osu! API. Fresh out of the oven.
+# osu4j
+a simple osu!api wrapper for Java.
 
 ## Example 1 - GetUserTest
 ```java
 import java.io.IOException;
 
-import com.github.oopsjpeg.osuapijw.Gamemode;
-import com.github.oopsjpeg.osuapijw.Osu;
-import com.github.oopsjpeg.osuapijw.OsuUser;
+import com.github.oopsjpeg.osu4j.Gamemode;
+import com.github.oopsjpeg.osu4j.Osu;
+import com.github.oopsjpeg.osu4j.OsuUser;
 
 public class GetUserTest {
 	
