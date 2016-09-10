@@ -31,12 +31,14 @@ public class OsuUser {
 	private String country;
 	private long countryRank;
 	private int mode;
+	private JSONArray eventsArr;
 	private List<OsuUserEvent> events = new ArrayList<>();
 	private List<OsuScore> topScores = new ArrayList<>();
 	private List<OsuScore> recentScores = new ArrayList<>();
 	
 	public OsuUser(Osu osu, JSONObject obj, int mode) throws JSONException, IOException {
 		this.osu = osu;
+		this.mode = mode;
 		userId = Integer.parseInt(obj.getString("user_id"));
 		username = obj.getString("username");
 		count300 = Long.parseLong(obj.getString("count300"));
@@ -53,11 +55,7 @@ public class OsuUser {
 		countRankA = Long.parseLong(obj.getString("count_rank_a"));
 		country = obj.getString("country");
 		countryRank = Long.parseLong(obj.getString("pp_country_rank"));
-		JSONArray eventsArr = obj.getJSONArray("events");
-		for(int i = 0; i < eventsArr.length(); i++){
-			events.add(new OsuUserEvent(osu, eventsArr.getJSONObject(i)));
-		}
-		this.mode = mode;
+		eventsArr = obj.getJSONArray("events");
 	}
 	
 	public OsuUser withTopScores(int limit) throws IOException, OsuRateLimitException {
@@ -67,6 +65,14 @@ public class OsuUser {
 	
 	public OsuUser withRecentScores(int limit) throws IOException, OsuRateLimitException {
 		recentScores = osu.getRecentScores(userId, limit, mode);
+		return this;
+	}
+	
+	public OsuUser withEvents() throws JSONException, IOException {
+		events.clear();
+		for(int i = 0; i < eventsArr.length(); i++){
+			events.add(new OsuUserEvent(osu, eventsArr.getJSONObject(i)));
+		}
 		return this;
 	}
 	
