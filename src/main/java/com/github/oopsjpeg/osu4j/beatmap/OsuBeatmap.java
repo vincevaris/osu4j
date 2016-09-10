@@ -1,8 +1,14 @@
-package com.github.oopsjpeg.osuapijw;
+package com.github.oopsjpeg.osu4j.beatmap;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.json.JSONObject;
+
+import com.github.oopsjpeg.osu4j.Gamemode;
+import com.github.oopsjpeg.osu4j.Osu;
+import com.github.oopsjpeg.osu4j.util.OsuRateLimitException;
 
 public class OsuBeatmap {
 	protected Osu osu;
@@ -65,11 +71,12 @@ public class OsuBeatmap {
 		maxCombo = Long.parseLong(obj.getString("max_combo"));
 	}
 	
+	public Osu getParent(){ return osu; }
 	public boolean getApproved(){ return (approved==1) ? true : false; }
 	public String getApprovedDate(){ return approvedDate; }
 	public String getLastUpdate(){ return lastUpdate; }
 	public String getArtist(){ return artist; }
-	public OsuBeatmap getBeatmap() throws IOException { return osu.getBeatmap(beatmapId); }
+	public OsuBeatmap getBeatmap() throws IOException, OsuRateLimitException { return osu.getBeatmap(beatmapId); }
 	public int getBeatmapID(){ return beatmapId; }
 	public int getBeatmapSetID(){ return beatmapSetId; }
 	public long getBPM(){ return Math.round(bpm); }
@@ -95,5 +102,5 @@ public class OsuBeatmap {
 	public long getPlayCount(){ return playCount; }
 	public long getPassCount(){ return passCount; }
 	public long getMaxCombo(){ return maxCombo; }
-	public String getURL(){ return "https://osu.ppy.sh/b/" + beatmapSetId; }
+	public URL getURL() throws MalformedURLException { return new URL("https://osu.ppy.sh/b/" + beatmapSetId); }
 }

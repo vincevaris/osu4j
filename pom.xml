@@ -3,7 +3,7 @@
 	<groupId>com.github.oopsjpeg</groupId>
 	<artifactId>osuapijw</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<name>osu! API Java Wrapper</name>
 	<description>A Java wrapper for the osu! API. Fresh out of the oven.</description>
 	<url>https://github.com/oopsjpeg/osuapijw</url>

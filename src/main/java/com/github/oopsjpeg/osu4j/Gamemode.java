@@ -1,4 +1,4 @@
-package com.github.oopsjpeg.osuapijw;
+package com.github.oopsjpeg.osu4j;
 
 public enum Gamemode {
 	STANDARD(0, "osu!"),

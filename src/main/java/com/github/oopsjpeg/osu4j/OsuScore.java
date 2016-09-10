@@ -1,8 +1,11 @@
-package com.github.oopsjpeg.osuapijw;
+package com.github.oopsjpeg.osu4j;
 
 import java.io.IOException;
 
 import org.json.JSONObject;
+
+import com.github.oopsjpeg.osu4j.beatmap.OsuBeatmap;
+import com.github.oopsjpeg.osu4j.util.OsuRateLimitException;
 
 public class OsuScore {
 	private Osu osu;
@@ -41,6 +44,7 @@ public class OsuScore {
 		pp = Double.parseDouble(obj.getString("pp"));
 	}
 	
+	public Osu getParent(){ return osu; }
 	public int getBeatmapId(){ return beatmapId; }
 	public int getScore(){ return score; }
 	public int getMaxCombo(){ return maxCombo; }
@@ -59,6 +63,6 @@ public class OsuScore {
 	public long getPP(){ return Math.round(pp); }
 	public double getPPRaw(){ return pp; }
 	
-	public OsuBeatmap getBeatmap() throws IOException { return osu.getBeatmap(beatmapId); }
+	public OsuBeatmap getBeatmap() throws IOException, OsuRateLimitException { return osu.getBeatmap(beatmapId); }
 	
 }
