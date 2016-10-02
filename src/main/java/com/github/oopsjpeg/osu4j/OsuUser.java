@@ -14,7 +14,7 @@ import com.github.oopsjpeg.osu4j.util.OsuRateLimitException;
 
 public class OsuUser {
 	private Osu osu;
-	private int userId;
+	private int userID;
 	private String username;
 	private long count300;
 	private long count100;
@@ -36,35 +36,35 @@ public class OsuUser {
 	private List<OsuScore> topScores = new ArrayList<>();
 	private List<OsuScore> recentScores = new ArrayList<>();
 	
-	public OsuUser(Osu osu, JSONObject obj, int mode) throws JSONException, IOException {
+	public OsuUser(Osu osu, JSONObject json, int mode) throws JSONException, IOException {
 		this.osu = osu;
 		this.mode = mode;
-		userId = Integer.parseInt(obj.getString("user_id"));
-		username = obj.getString("username");
-		count300 = Long.parseLong(obj.getString("count300"));
-		count100 = Long.parseLong(obj.getString("count100"));
-		count50 = Long.parseLong(obj.getString("count50"));
-		playCount = Long.parseLong(obj.getString("playcount"));
-		rankedScore = Long.parseLong(obj.getString("ranked_score"));
-		totalScore = Long.parseLong(obj.getString("total_score"));
-		pp = Double.parseDouble(obj.getString("pp_raw"));
-		rank = Long.parseLong(obj.getString("pp_rank"));
-		accuracy = Double.parseDouble(obj.getString("accuracy"));
-		countRankSS = Long.parseLong(obj.getString("count_rank_ss"));
-		countRankS = Long.parseLong(obj.getString("count_rank_s"));
-		countRankA = Long.parseLong(obj.getString("count_rank_a"));
-		country = obj.getString("country");
-		countryRank = Long.parseLong(obj.getString("pp_country_rank"));
-		eventsArr = obj.getJSONArray("events");
+		if(!json.isNull("user_id")) userID = Integer.parseInt(json.getString("user_id"));
+		if(!json.isNull("username")) username = json.getString("username");
+		if(!json.isNull("count300")) count300 = Long.parseLong(json.getString("count300"));
+		if(!json.isNull("count100")) count100 = Long.parseLong(json.getString("count100"));
+		if(!json.isNull("count50")) count50 = Long.parseLong(json.getString("count50"));
+		if(!json.isNull("playcount")) playCount = Long.parseLong(json.getString("playcount"));
+		if(!json.isNull("ranked_score")) rankedScore = Long.parseLong(json.getString("ranked_score"));
+		if(!json.isNull("total_score")) totalScore = Long.parseLong(json.getString("total_score"));
+		if(!json.isNull("pp_raw")) pp = Double.parseDouble(json.getString("pp_raw"));
+		if(!json.isNull("pp_rank")) rank = Long.parseLong(json.getString("pp_rank"));
+		if(!json.isNull("accuracy")) accuracy = Double.parseDouble(json.getString("accuracy"));
+		if(!json.isNull("count_rank_ss")) countRankSS = Long.parseLong(json.getString("count_rank_ss"));
+		if(!json.isNull("count_rank_s")) countRankS = Long.parseLong(json.getString("count_rank_s"));
+		if(!json.isNull("count_rank_a")) countRankA = Long.parseLong(json.getString("count_rank_a"));
+		if(!json.isNull("country")) country = json.getString("country");
+		if(!json.isNull("pp_country_rank")) countryRank = Long.parseLong(json.getString("pp_country_rank"));
+		if(!json.isNull("events")) eventsArr = json.getJSONArray("events");
 	}
 	
 	public OsuUser withTopScores(int limit) throws IOException, OsuRateLimitException {
-		topScores = osu.getTopScores(userId, limit, mode);
+		topScores = osu.getTopScores(userID, limit, mode);
 		return this;
 	}
 	
 	public OsuUser withRecentScores(int limit) throws IOException, OsuRateLimitException {
-		recentScores = osu.getRecentScores(userId, limit, mode);
+		recentScores = osu.getRecentScores(userID, limit, mode);
 		return this;
 	}
 	
@@ -77,7 +77,7 @@ public class OsuUser {
 	}
 	
 	public Osu getParent(){ return osu; }
-	public int getUserId(){ return userId; }
+	public int getUserID(){ return userID; }
 	public String getUsername(){ return username; }
 	public long getCount300(){ return count300; }
 	public long getCount100(){ return count100; }
@@ -95,7 +95,7 @@ public class OsuUser {
 	public long getCountRankA(){ return countRankA; }
 	public String getCountry(){ return country; }
 	public long getCountryRank(){ return countryRank; }
-	public Gamemode getMode(){ return Gamemode.getByID(mode); }
+	public OsuGamemode getMode(){ return OsuGamemode.getByID(mode); }
 	public int getModeID(){ return mode; }
 	public OsuUserEvent getEvent(int index){ return events.get(index); }
 	public List<OsuUserEvent> getEvents(){ return events; }
@@ -103,6 +103,6 @@ public class OsuUser {
 	public List<OsuScore> getTopScores(){ return topScores; }
 	public OsuScore getRecentScore(int index){ return recentScores.get(index); }
 	public List<OsuScore> getRecentScores(){ return recentScores; }
-	public URL getURL() throws MalformedURLException { return new URL("https://osu.ppy.sh/u/" + userId); }
+	public URL getURL() throws MalformedURLException { return new URL("https://osu.ppy.sh/u/" + userID); }
 	
 }

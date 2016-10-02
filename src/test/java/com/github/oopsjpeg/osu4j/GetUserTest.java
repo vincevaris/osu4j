@@ -2,7 +2,7 @@ package com.github.oopsjpeg.osu4j;
 
 import java.io.IOException;
 
-import com.github.oopsjpeg.osu4j.Gamemode;
+import com.github.oopsjpeg.osu4j.OsuGamemode;
 import com.github.oopsjpeg.osu4j.Osu;
 import com.github.oopsjpeg.osu4j.OsuScore;
 import com.github.oopsjpeg.osu4j.OsuUser;
@@ -13,7 +13,7 @@ public class GetUserTest {
 	
 	private static final String USER = "oopsjpeg";
 	private static final String KEY = "Your osu! API key"; // Replace this with your API key to test.
-	private static final Gamemode MODE = Gamemode.STANDARD;
+	private static final OsuGamemode MODE = OsuGamemode.STANDARD;
 	private static final int TOP_SCORE_LIMIT = 3;
 	
 	public static void main(String[] args) throws OsuRateLimitException, IOException {

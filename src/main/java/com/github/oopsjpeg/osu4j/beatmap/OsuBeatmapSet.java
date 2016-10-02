@@ -24,5 +24,5 @@ public class OsuBeatmapSet extends OsuBeatmap {
 	public OsuBeatmap getBeatmap(int index){ return beatmaps.get(index); }
 	public List<OsuBeatmap> getBeatmaps(){ return beatmaps; }
 	@Override
-	public URL getURL() throws MalformedURLException { return new URL("https://osu.ppy.sh/b/" + beatmapSetId); }
+	public URL getURL() throws MalformedURLException { return new URL("https://osu.ppy.sh/b/" + beatmapSetID); }
 }

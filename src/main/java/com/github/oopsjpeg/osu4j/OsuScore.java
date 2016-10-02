@@ -9,7 +9,7 @@ import com.github.oopsjpeg.osu4j.util.OsuRateLimitException;
 
 public class OsuScore {
 	private Osu osu;
-	private int beatmapId;
+	private int beatmapID;
 	private int score;
 	private int maxCombo;
 	private int count300;
@@ -20,32 +20,32 @@ public class OsuScore {
 	private int countGeki;
 	private int perfect;
 	private int enabledMods;
-	private int userId;
+	private int userID;
 	private String date;
 	private String rank;
 	public double pp;
 	
-	public OsuScore(Osu osu, JSONObject obj){
+	public OsuScore(Osu osu, JSONObject json){
 		this.osu = osu;
-		beatmapId = Integer.parseInt(obj.getString("beatmap_id"));
-		score = Integer.parseInt(obj.getString("score"));
-		maxCombo = Integer.parseInt(obj.getString("maxcombo"));
-		count300 = Integer.parseInt(obj.getString("count300"));
-		count100 = Integer.parseInt(obj.getString("count100"));
-		count50 = Integer.parseInt(obj.getString("count50"));
-		countMiss = Integer.parseInt(obj.getString("countmiss"));
-		countKatu = Integer.parseInt(obj.getString("countkatu"));
-		countGeki = Integer.parseInt(obj.getString("countgeki"));
-		perfect = Integer.parseInt(obj.getString("perfect"));
-		enabledMods = Integer.parseInt(obj.getString("enabled_mods"));
-		userId = Integer.parseInt(obj.getString("user_id"));
-		date = obj.getString("date");
-		rank = obj.getString("rank");
-		pp = Double.parseDouble(obj.getString("pp"));
+		if(!json.isNull("beatmap_id")) beatmapID = Integer.parseInt(json.getString("beatmap_id"));
+		if(!json.isNull("score")) score = Integer.parseInt(json.getString("score"));
+		if(!json.isNull("maxcombo")) maxCombo = Integer.parseInt(json.getString("maxcombo"));
+		if(!json.isNull("count300")) count300 = Integer.parseInt(json.getString("count300"));
+		if(!json.isNull("count100")) count100 = Integer.parseInt(json.getString("count100"));
+		if(!json.isNull("count50")) count50 = Integer.parseInt(json.getString("count50"));
+		if(!json.isNull("countmiss")) countMiss = Integer.parseInt(json.getString("countmiss"));
+		if(!json.isNull("countkatu")) countKatu = Integer.parseInt(json.getString("countkatu"));
+		if(!json.isNull("countgeki")) countGeki = Integer.parseInt(json.getString("countgeki"));
+		if(!json.isNull("perfect")) perfect = Integer.parseInt(json.getString("perfect"));
+		if(!json.isNull("enabled_mods")) enabledMods = Integer.parseInt(json.getString("enabled_mods"));
+		if(!json.isNull("user_id")) userID = Integer.parseInt(json.getString("user_id"));
+		if(!json.isNull("date")) date = json.getString("date");
+		if(!json.isNull("rank")) rank = json.getString("rank");
+		if(!json.isNull("pp")) pp = Double.parseDouble(json.getString("pp"));
 	}
 	
 	public Osu getParent(){ return osu; }
-	public int getBeatmapId(){ return beatmapId; }
+	public int getBeatmapID(){ return beatmapID; }
 	public int getScore(){ return score; }
 	public int getMaxCombo(){ return maxCombo; }
 	public int getCount300(){ return count300; }
@@ -57,12 +57,12 @@ public class OsuScore {
 	public int getCountTotal(){ return countMiss + count50 + count100 + count300; }
 	public boolean isPerfect(){ return (perfect==1) ? true : false; }
 	public int getEnabledMods(){ return enabledMods; }
-	public int getUserId(){ return userId; }
+	public int getUserID(){ return userID; }
 	public String getDate(){ return date; }
 	public String getRank(){ return rank; }
 	public long getPP(){ return Math.round(pp); }
 	public double getPPRaw(){ return pp; }
 	
-	public OsuBeatmap getBeatmap() throws IOException, OsuRateLimitException { return osu.getBeatmap(beatmapId); }
+	public OsuBeatmap getBeatmap() throws IOException, OsuRateLimitException { return osu.getBeatmap(beatmapID); }
 	
 }

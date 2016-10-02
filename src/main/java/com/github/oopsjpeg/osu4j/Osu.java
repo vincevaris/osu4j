@@ -53,79 +53,92 @@ public class Osu {
 	public void setRequestsPerMinute(long requestsPerMinute){ this.requestsPerMinute = requestsPerMinute; }
 	public long getRequestsPerMinute(){ return requestsPerMinute; }
 
-	public OsuBeatmap getBeatmap(int beatmapId) throws IOException, OsuRateLimitException {
-		return getBeatmap(String.valueOf(beatmapId), 0);
+	public List<OsuBeatmap> getBeatmaps() throws IOException, OsuRateLimitException {
+		return getBeatmaps(500);
 	}
 	
-	public OsuBeatmap getBeatmap(int beatmapId, int modeID) throws IOException, OsuRateLimitException {
-		return getBeatmap(String.valueOf(beatmapId), modeID);
-	}
-	
-	public OsuBeatmap getBeatmap(int beatmapId, Gamemode mode) throws IOException, OsuRateLimitException {
-		return getBeatmap(String.valueOf(beatmapId), mode.getID());
-	}
-	
-	public OsuBeatmap getBeatmap(String beatmapId) throws IOException, OsuRateLimitException {
-		return getBeatmap(beatmapId, 0);
-	}
-	
-	public OsuBeatmap getBeatmap(String beatmapId, Gamemode mode) throws IOException, OsuRateLimitException {
-		return getBeatmap(beatmapId, mode.getID());
-	}
-	
-	public OsuBeatmap getBeatmap(String beatmapId, int modeID) throws IOException, OsuRateLimitException {
+	public List<OsuBeatmap> getBeatmaps(int limit) throws IOException, OsuRateLimitException {
 		if(currentRequests >= requestsPerMinute) throw new OsuRateLimitException(requestsPerMinute);
-		String jsontext = readUrl("http://osu.ppy.sh/api/get_beatmaps?k=" + token + "&b=" + beatmapId + "&m=" + modeID);
+		String jsontext = readUrl("http://osu.ppy.sh/api/get_beatmaps?k=" + token + "&limit=" + limit);
+		JSONArray json = new JSONArray(jsontext);
+		List<OsuBeatmap> build = new ArrayList<>();
+		for(int i = 0; i < json.length(); i++){ build.add(new OsuBeatmap(this, json.getJSONObject(i))); }
+		return build;
+	}
+	
+	public OsuBeatmap getBeatmap(int beatmapID) throws IOException, OsuRateLimitException {
+		return getBeatmap(String.valueOf(beatmapID), 0);
+	}
+	
+	public OsuBeatmap getBeatmap(int beatmapID, int modeID) throws IOException, OsuRateLimitException {
+		return getBeatmap(String.valueOf(beatmapID), modeID);
+	}
+	
+	public OsuBeatmap getBeatmap(int beatmapID, OsuGamemode mode) throws IOException, OsuRateLimitException {
+		return getBeatmap(String.valueOf(beatmapID), mode.getID());
+	}
+	
+	public OsuBeatmap getBeatmap(String beatmapID) throws IOException, OsuRateLimitException {
+		return getBeatmap(beatmapID, 0);
+	}
+	
+	public OsuBeatmap getBeatmap(String beatmapID, OsuGamemode mode) throws IOException, OsuRateLimitException {
+		return getBeatmap(beatmapID, mode.getID());
+	}
+	
+	public OsuBeatmap getBeatmap(String beatmapID, int modeID) throws IOException, OsuRateLimitException {
+		if(currentRequests >= requestsPerMinute) throw new OsuRateLimitException(requestsPerMinute);
+		String jsontext = readUrl("http://osu.ppy.sh/api/get_beatmaps?k=" + token + "&b=" + beatmapID + "&m=" + modeID);
 		JSONArray json = new JSONArray(jsontext);
 		return new OsuBeatmap(this, json.getJSONObject(0));
 	}
 	
-	public OsuBeatmapSet getBeatmapSet(int beatmapSetId) throws IOException, OsuRateLimitException {
-		return getBeatmapSet(String.valueOf(beatmapSetId), 0);
+	public OsuBeatmapSet getBeatmapSet(int beatmapSetID) throws IOException, OsuRateLimitException {
+		return getBeatmapSet(String.valueOf(beatmapSetID), 0);
 	}
 	
-	public OsuBeatmapSet getBeatmapSet(int beatmapSetId, int modeID) throws IOException, OsuRateLimitException {
-		return getBeatmapSet(String.valueOf(beatmapSetId), modeID);
+	public OsuBeatmapSet getBeatmapSet(int beatmapSetID, int modeID) throws IOException, OsuRateLimitException {
+		return getBeatmapSet(String.valueOf(beatmapSetID), modeID);
 	}
 	
-	public OsuBeatmapSet getBeatmapSet(int beatmapSetId, Gamemode mode) throws IOException, OsuRateLimitException {
-		return getBeatmapSet(String.valueOf(beatmapSetId), mode.getID());
+	public OsuBeatmapSet getBeatmapSet(int beatmapSetID, OsuGamemode mode) throws IOException, OsuRateLimitException {
+		return getBeatmapSet(String.valueOf(beatmapSetID), mode.getID());
 	}
 	
-	public OsuBeatmapSet getBeatmapSet(String beatmapSetId) throws IOException, OsuRateLimitException {
-		return getBeatmapSet(beatmapSetId, 0);
+	public OsuBeatmapSet getBeatmapSet(String beatmapSetID) throws IOException, OsuRateLimitException {
+		return getBeatmapSet(beatmapSetID, 0);
 	}
 	
-	public OsuBeatmapSet getBeatmapSet(String beatmapSetId, Gamemode mode) throws IOException, OsuRateLimitException {
-		return getBeatmapSet(beatmapSetId, mode.getID());
+	public OsuBeatmapSet getBeatmapSet(String beatmapSetID, OsuGamemode mode) throws IOException, OsuRateLimitException {
+		return getBeatmapSet(beatmapSetID, mode.getID());
 	}
 	
-	public OsuBeatmapSet getBeatmapSet(String beatmapSetId, int modeID) throws IOException, OsuRateLimitException {
+	public OsuBeatmapSet getBeatmapSet(String beatmapSetID, int modeID) throws IOException, OsuRateLimitException {
 		if(currentRequests >= requestsPerMinute) throw new OsuRateLimitException(requestsPerMinute);
-		String jsontext = readUrl("http://osu.ppy.sh/api/get_beatmaps?k=" + token + "&s=" + beatmapSetId + "&m=" + modeID);
+		String jsontext = readUrl("http://osu.ppy.sh/api/get_beatmaps?k=" + token + "&s=" + beatmapSetID + "&m=" + modeID);
 		JSONArray json = new JSONArray(jsontext);
 		return new OsuBeatmapSet(this, json);
 	}
 	
-	public OsuUser getUser(int userId) throws IOException, OsuRateLimitException {
-		return getUser(userId, 0);
+	public OsuUser getUser(int userID) throws IOException, OsuRateLimitException {
+		return getUser(userID, 0);
 	}
 	
 	public OsuUser getUser(String username) throws IOException, OsuRateLimitException {
 		return getUser(username, 0);
 	}
 	
-	public OsuUser getUser(int userId, Gamemode mode) throws IOException, OsuRateLimitException {
-		return getUser(userId, mode.getID());
+	public OsuUser getUser(int userID, OsuGamemode mode) throws IOException, OsuRateLimitException {
+		return getUser(userID, mode.getID());
 	}
 	
-	public OsuUser getUser(String username, Gamemode mode) throws IOException, OsuRateLimitException {
+	public OsuUser getUser(String username, OsuGamemode mode) throws IOException, OsuRateLimitException {
 		return getUser(username, mode.getID());
 	}
 	
-	public OsuUser getUser(int userId, int modeID) throws IOException, OsuRateLimitException {
+	public OsuUser getUser(int userID, int modeID) throws IOException, OsuRateLimitException {
 		if(currentRequests >= requestsPerMinute) throw new OsuRateLimitException(requestsPerMinute);
-		String jsontext = readUrl("http://osu.ppy.sh/api/get_user?k=" + token + "&u=" + userId + "&m=" + modeID + "&type=id");
+		String jsontext = readUrl("http://osu.ppy.sh/api/get_user?k=" + token + "&u=" + userID + "&m=" + modeID + "&type=id");
 		JSONArray json = new JSONArray(jsontext);
 		return new OsuUser(this, json.getJSONObject(0), modeID);
 	}
@@ -137,25 +150,25 @@ public class Osu {
 		return new OsuUser(this, json.getJSONObject(0), modeID);
 	}
 	
-	public List<OsuScore> getTopScores(int userId, int limit) throws IOException, OsuRateLimitException {
-		return getTopScores(userId, limit, 0);
+	public List<OsuScore> getTopScores(int userID, int limit) throws IOException, OsuRateLimitException {
+		return getTopScores(userID, limit, 0);
 	}
 	
 	public List<OsuScore> getTopScores(String username, int limit) throws IOException, OsuRateLimitException {
 		return getTopScores(username, limit, 0);
 	}
 	
-	public List<OsuScore> getTopScores(int userId, int limit, Gamemode mode) throws IOException, OsuRateLimitException {
-		return getTopScores(userId, limit, mode.getID());
+	public List<OsuScore> getTopScores(int userID, int limit, OsuGamemode mode) throws IOException, OsuRateLimitException {
+		return getTopScores(userID, limit, mode.getID());
 	}
 	
-	public List<OsuScore> getTopScores(String username, int limit, Gamemode mode) throws IOException, OsuRateLimitException {
+	public List<OsuScore> getTopScores(String username, int limit, OsuGamemode mode) throws IOException, OsuRateLimitException {
 		return getTopScores(username, limit, mode.getID());
 	}
 	
-	public List<OsuScore> getTopScores(int userId, int limit, int modeID) throws IOException, OsuRateLimitException {
+	public List<OsuScore> getTopScores(int userID, int limit, int modeID) throws IOException, OsuRateLimitException {
 		if(currentRequests >= requestsPerMinute) throw new OsuRateLimitException(requestsPerMinute);
-		String jsontext = readUrl("http://osu.ppy.sh/api/get_user_best?k=" + token + "&u=" + userId + "&m=" + modeID + "&type=id&limit=" + limit);
+		String jsontext = readUrl("http://osu.ppy.sh/api/get_user_best?k=" + token + "&u=" + userID + "&m=" + modeID + "&type=id&limit=" + limit);
 		JSONArray json = new JSONArray(jsontext);
 		List<OsuScore> build = new ArrayList<>();
 		for(int i = 0; i < json.length(); i++){ build.add(new OsuScore(this, json.getJSONObject(i))); }
@@ -171,25 +184,25 @@ public class Osu {
 		return build;
 	}
 	
-	public List<OsuScore> getRecentScores(int userId, int limit) throws IOException, OsuRateLimitException {
-		return getTopScores(userId, limit, 0);
+	public List<OsuScore> getRecentScores(int userID, int limit) throws IOException, OsuRateLimitException {
+		return getTopScores(userID, limit, 0);
 	}
 	
 	public List<OsuScore> getRecentScores(String username, int limit) throws IOException, OsuRateLimitException {
 		return getTopScores(username, limit, 0);
 	}
 	
-	public List<OsuScore> getRecentScores(int userId, int limit, Gamemode mode) throws IOException, OsuRateLimitException {
-		return getTopScores(userId, limit, mode.getID());
+	public List<OsuScore> getRecentScores(int userID, int limit, OsuGamemode mode) throws IOException, OsuRateLimitException {
+		return getTopScores(userID, limit, mode.getID());
 	}
 	
-	public List<OsuScore> getRecentScores(String username, int limit, Gamemode mode) throws IOException, OsuRateLimitException {
+	public List<OsuScore> getRecentScores(String username, int limit, OsuGamemode mode) throws IOException, OsuRateLimitException {
 		return getTopScores(username, limit, mode.getID());
 	}
 	
-	public List<OsuScore> getRecentScores(int userId, int limit, int modeID) throws IOException, OsuRateLimitException {
+	public List<OsuScore> getRecentScores(int userID, int limit, int modeID) throws IOException, OsuRateLimitException {
 		if(currentRequests >= requestsPerMinute) throw new OsuRateLimitException(requestsPerMinute);
-		String jsontext = readUrl("http://osu.ppy.sh/api/get_user_recent?k=" + token + "&u=" + userId + "&m=" + modeID + "&type=id&limit=" + limit);
+		String jsontext = readUrl("http://osu.ppy.sh/api/get_user_recent?k=" + token + "&u=" + userID + "&m=" + modeID + "&type=id&limit=" + limit);
 		JSONArray json = new JSONArray(jsontext);
 		List<OsuScore> build = new ArrayList<>();
 		for(int i = 0; i < json.length(); i++){ build.add(new OsuScore(this, json.getJSONObject(i))); }
@@ -212,8 +225,8 @@ public class Osu {
 		return new OsuMatch(this, json.getJSONObject(0));
 	}
 	
-	public OsuReplay getReplay(Gamemode mode, OsuBeatmap beatmap, OsuUser user) throws IOException, OsuRateLimitException {
-		return getReplay(mode.getID(), beatmap.getBeatmapID(), user.getUserId());
+	public OsuReplay getReplay(OsuGamemode mode, OsuBeatmap beatmap, OsuUser user) throws IOException, OsuRateLimitException {
+		return getReplay(mode.getID(), beatmap.getBeatmapID(), user.getUserID());
 	}
 	
 	public OsuReplay getReplay(int modeID, int beatmapID, int userID) throws IOException, OsuRateLimitException {

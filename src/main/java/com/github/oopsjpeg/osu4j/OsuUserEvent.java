@@ -13,26 +13,26 @@ public class OsuUserEvent {
 	
 	private Osu osu;
 	private String displayHtml;
-	private int beatmapId;
-	private int beatmapSetId;
+	private int beatmapID;
+	private int beatmapSetID;
 	private String date;
 	private int epicFactor;
 	
-	public OsuUserEvent(Osu osu, JSONObject obj) throws JSONException, IOException {
+	public OsuUserEvent(Osu osu, JSONObject json) throws JSONException, IOException {
 		this.osu = osu;
-		displayHtml = obj.getString("display_html");
-		beatmapId = Integer.parseInt(obj.getString("beatmap_id"));
-		beatmapSetId = Integer.parseInt(obj.getString("beatmapset_id"));
-		date = obj.getString("date");
-		epicFactor = Integer.parseInt(obj.getString("epicfactor"));
+		if(!json.isNull("display_html")) displayHtml = json.getString("display_html");
+		if(!json.isNull("beatmap_id")) beatmapID = Integer.parseInt(json.getString("beatmap_id"));
+		if(!json.isNull("beatmapset_id")) beatmapSetID = Integer.parseInt(json.getString("beatmapset_id"));
+		if(!json.isNull("date")) date = json.getString("date");
+		if(!json.isNull("epicfactor")) epicFactor = Integer.parseInt(json.getString("epicfactor"));
 	}
 	
 	public Osu getParent(){ return osu; }
 	public String getDisplayHTML(){ return displayHtml; }
-	public OsuBeatmap getBeatmap() throws IOException, OsuRateLimitException{ return osu.getBeatmap(beatmapId); }
-	public int getBeatmapID() { return beatmapId; }
-	public OsuBeatmapSet getBeatmapSet() throws IOException, OsuRateLimitException { return osu.getBeatmapSet(beatmapSetId); }
-	public int getBeatmapSetID(){ return beatmapSetId; }
+	public OsuBeatmap getBeatmap() throws IOException, OsuRateLimitException{ return osu.getBeatmap(beatmapID); }
+	public int getBeatmapID() { return beatmapID; }
+	public OsuBeatmapSet getBeatmapSet() throws IOException, OsuRateLimitException { return osu.getBeatmapSet(beatmapSetID); }
+	public int getBeatmapSetID(){ return beatmapSetID; }
 	public String getDate(){ return date; }
 	public int getEpicFactor(){ return epicFactor; }
 	

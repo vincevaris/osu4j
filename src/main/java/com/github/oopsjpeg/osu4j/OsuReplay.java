@@ -10,8 +10,8 @@ public class OsuReplay {
 	
 	public OsuReplay(Osu osu, JSONObject json){
 		this.osu = osu;
-		content = json.getString("content");
-		encoding = json.getString("encoding");
+		if(!json.isNull("content")) content = json.getString("content");
+		if(!json.isNull("encoding")) encoding = json.getString("encoding");
 	}
 	
 	public Osu getParent(){ return osu; }
