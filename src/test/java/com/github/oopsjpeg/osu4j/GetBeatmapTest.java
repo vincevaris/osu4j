@@ -2,7 +2,7 @@ package com.github.oopsjpeg.osu4j;
 
 import java.io.IOException;
 
-import com.github.oopsjpeg.osu4j.OsuGamemode;
+import com.github.oopsjpeg.osu4j.OsuMode;
 import com.github.oopsjpeg.osu4j.Osu;
 import com.github.oopsjpeg.osu4j.beatmap.OsuBeatmap;
 import com.github.oopsjpeg.osu4j.util.OsuRateLimitException;
@@ -11,7 +11,7 @@ public class GetBeatmapTest {
 	
 	private static final int BEATMAP_ID = 131891;
 	private static final String KEY = "Your osu! API key"; // Replace this with your API key to test.
-	private static final OsuGamemode MODE = OsuGamemode.STANDARD;
+	private static final OsuMode MODE = OsuMode.STANDARD;
 	
 	public static void main(String[] args) throws OsuRateLimitException, IOException {
 		// Create a new Osu object with an API key

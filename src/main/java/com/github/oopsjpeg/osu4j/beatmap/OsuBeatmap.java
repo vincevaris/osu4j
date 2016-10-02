@@ -6,7 +6,7 @@ import java.net.URL;
 
 import org.json.JSONObject;
 
-import com.github.oopsjpeg.osu4j.OsuGamemode;
+import com.github.oopsjpeg.osu4j.OsuMode;
 import com.github.oopsjpeg.osu4j.Osu;
 import com.github.oopsjpeg.osu4j.util.OsuRateLimitException;
 
@@ -95,7 +95,7 @@ public class OsuBeatmap {
 	public double getTotalLength(){ return totalLength; }
 	public String getVersion(){ return version; }
 	public String getFileMD5(){ return fileMd5; }
-	public OsuGamemode getMode(){ return OsuGamemode.getByID(mode); }
+	public OsuMode getMode(){ return OsuMode.getByID(mode); }
 	public int getModeID(){ return mode; }
 	public String[] getTags(){ return tags.split(" "); }
 	public long getFavouriteCount(){ return favouriteCount; }

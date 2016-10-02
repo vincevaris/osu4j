@@ -95,7 +95,7 @@ public class OsuUser {
 	public long getCountRankA(){ return countRankA; }
 	public String getCountry(){ return country; }
 	public long getCountryRank(){ return countryRank; }
-	public OsuGamemode getMode(){ return OsuGamemode.getByID(mode); }
+	public OsuMode getMode(){ return OsuMode.getByID(mode); }
 	public int getModeID(){ return mode; }
 	public OsuUserEvent getEvent(int index){ return events.get(index); }
 	public List<OsuUserEvent> getEvents(){ return events; }

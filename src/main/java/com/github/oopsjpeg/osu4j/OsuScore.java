@@ -56,7 +56,7 @@ public class OsuScore {
 	public int getCountGeki(){ return countGeki; }
 	public int getCountTotal(){ return countMiss + count50 + count100 + count300; }
 	public boolean isPerfect(){ return (perfect==1) ? true : false; }
-	public int getEnabledMods(){ return enabledMods; }
+	public int getEnabledModIDs(){ return enabledMods; }
 	public int getUserID(){ return userID; }
 	public String getDate(){ return date; }
 	public String getRank(){ return rank; }
