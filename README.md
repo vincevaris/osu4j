@@ -3,9 +3,11 @@ a simple osu!api wrapper for Java.
 
 ## Example 1 - GetUserTest
 ```java
+package com.github.oopsjpeg.osu4j;
+
 import java.io.IOException;
 
-import com.github.oopsjpeg.osu4j.Gamemode;
+import com.github.oopsjpeg.osu4j.OsuMode;
 import com.github.oopsjpeg.osu4j.Osu;
 import com.github.oopsjpeg.osu4j.OsuScore;
 import com.github.oopsjpeg.osu4j.OsuUser;
@@ -16,7 +18,7 @@ public class GetUserTest {
 	
 	private static final String USER = "oopsjpeg";
 	private static final String KEY = "Your osu! API key"; // Replace this with your API key to test.
-	private static final Gamemode MODE = Gamemode.STANDARD;
+	private static final OsuMode MODE = OsuMode.STANDARD;
 	private static final int TOP_SCORE_LIMIT = 3;
 	
 	public static void main(String[] args) throws OsuRateLimitException, IOException {
@@ -47,7 +49,7 @@ public class GetUserTest {
 ```java
 import java.io.IOException;
 
-import com.github.oopsjpeg.osu4j.Gamemode;
+import com.github.oopsjpeg.osu4j.OsuMode;
 import com.github.oopsjpeg.osu4j.Osu;
 import com.github.oopsjpeg.osu4j.beatmap.OsuBeatmap;
 import com.github.oopsjpeg.osu4j.util.OsuRateLimitException;
@@ -56,7 +58,7 @@ public class GetBeatmapTest {
 	
 	private static final int BEATMAP_ID = 131891;
 	private static final String KEY = "Your osu! API key"; // Replace this with your API key to test.
-	private static final Gamemode MODE = Gamemode.STANDARD;
+	private static final OsuMode MODE = OsuMode.STANDARD;
 	
 	public static void main(String[] args) throws OsuRateLimitException, IOException {
 		// Create a new Osu object with an API key
