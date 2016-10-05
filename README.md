@@ -1,5 +1,5 @@
 # osu4j
-a simple osu!api wrapper for Java.
+an easy-to-use wrapper for the osu!API, with users, beatmaps, matches, customizable rate limits, et cetera.
 
 ## Example 1 - GetUserTest
 ```java
