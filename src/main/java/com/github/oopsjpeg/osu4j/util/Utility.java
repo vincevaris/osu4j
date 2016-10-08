@@ -1,5 +1,7 @@
 package com.github.oopsjpeg.osu4j.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +26,14 @@ public class Utility {
             return null;
         }
         return date.format(FORMATTER);
+    }
+
+    public static String urlEncode(String argument) {
+        try {
+            return URLEncoder.encode(argument, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

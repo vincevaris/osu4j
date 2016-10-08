@@ -19,6 +19,8 @@ import org.json.JSONTokener;
 
 import com.github.oopsjpeg.osu4j.exception.MalformedRequestException;
 import com.github.oopsjpeg.osu4j.exception.OsuAPIException;
+import com.github.oopsjpeg.osu4j.exception.OsuRateLimitException;
+import com.github.oopsjpeg.osu4j.util.Utility;
 
 /**
  * Encapsules the raw API, managing requests per minute, etc..
@@ -49,9 +51,11 @@ public class Osu {
     private static final String PPYBASE_URL = "https://osu.ppy.sh";
     private static final String API_PARAMETER = "k";
     private static final int READTIMEOUT = 10000;
+    private static final int DEFAULT_LIMIT = 120;
 
     private OsuToken token;
     private APIAccess access = new APIAccess();
+    private RateLimiter limiter = new RateLimiter(DEFAULT_LIMIT);
     public final EndpointBeatmaps beatmaps = new EndpointBeatmaps(access);
     public final EndpointBeatmapSet beatmapSets = new EndpointBeatmapSet(beatmaps);
     public final EndpointMatches matches = new EndpointMatches(access);
@@ -123,19 +127,16 @@ public class Osu {
         }
     }
 
-    private void waitForFreeTicket() {
-        // TODO: actually wait until we get a ticket from the rate limiter
-        return;
+    private void waitForFreeTicket() throws OsuRateLimitException {
+        limiter.getOrWaitForTicket();
     }
 
     private String urlEncodeArgument(String value) {
-        // TODO Auto-generated method stub
-        return value;
+        return Utility.urlEncode(value);
     }
 
     private String urlEncodeKey(String key) {
-        // TODO Auto-generated method stub
-        return key;
+        return Utility.urlEncode(key);
     }
 
     private void checkResponseStatus(int responseCode) throws OsuAPIException {
