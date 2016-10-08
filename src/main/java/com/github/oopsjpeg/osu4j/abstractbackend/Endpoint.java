@@ -29,4 +29,8 @@ public interface Endpoint<A, R> {
     default Query<R> getAsQuery(A arguments) {
         return new Query<>(this, arguments);
     }
+
+    default Cache<R> getCacheFor(A arguments) {
+        return new SimpleItemCache<>();
+    }
 }

@@ -30,6 +30,10 @@ public final class Query<R> {
         public String toString() {
             return endpoint.toString() + "(" + arguments.toString() + ")";
         }
+
+        public Cache<R> getDefaultCache() {
+            return endpoint.getCacheFor(arguments);
+        }
     }
 
     private final EndpointWithArguments<?, R> filledEndpoint;
@@ -43,7 +47,7 @@ public final class Query<R> {
     }
 
     public LazilyLoaded<R> asLazilyLoaded() {
-        return new LazilyLoaded<>(this);
+        return getLazyResult(filledEndpoint.getDefaultCache());
     }
 
     public LazilyLoaded<R> getLazyResult(Cache<R> cacheToUse) {
