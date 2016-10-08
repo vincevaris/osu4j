@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -162,14 +163,13 @@ public class Osu {
         return allArguments;
     }
 
-    private static Map<OsuToken, Osu> apiPerToken = new HashMap<>();
+    private static Map<OsuToken, Osu> apiPerToken = Collections.synchronizedMap(new HashMap<>());
 
     public static Osu getAPI(String token) {
         return getAPI(new OsuToken(token));
     }
 
     public static Osu getAPI(OsuToken token) {
-        // FIXME: not thread-safe, an issue?
         return apiPerToken.computeIfAbsent(token, Osu::new);
     }
 }
