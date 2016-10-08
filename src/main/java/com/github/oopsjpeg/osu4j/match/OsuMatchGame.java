@@ -4,46 +4,78 @@ import java.io.IOException;
 
 import org.json.JSONObject;
 
-import com.github.oopsjpeg.osu4j.Osu;
+import com.github.oopsjpeg.osu4j.GameMods;
 import com.github.oopsjpeg.osu4j.OsuMode;
+import com.github.oopsjpeg.osu4j.abstractbackend.LazilyLoaded;
+import com.github.oopsjpeg.osu4j.backend.EndpointBeatmaps;
+import com.github.oopsjpeg.osu4j.backend.Osu;
 import com.github.oopsjpeg.osu4j.beatmap.OsuBeatmap;
-import com.github.oopsjpeg.osu4j.util.OsuRateLimitException;
+import com.github.oopsjpeg.osu4j.exception.OsuRateLimitException;
 
 public class OsuMatchGame {
-	private Osu osu;
-	private int gameID;
-	private String startTime;
-	private String endTime;
-	private int beatmapID;
-	private int mode;
-	private int matchType;
-	private int scoringType;
-	private int teamType;
-	private int mods;
-	
-	public OsuMatchGame(Osu osu, JSONObject json) {
-		this.osu = osu;
-		if(json.isNull("game_id")) gameID = Integer.parseInt(json.getString("game_id"));
-		if(json.isNull("start_time")) startTime = json.getString("start_time");
-		if(json.isNull("end_time")) endTime = json.getString("end_time");
-		if(json.isNull("beatmap_id")) beatmapID = Integer.parseInt(json.getString("beatmap_id"));
-		if(json.isNull("play_mode")) mode = Integer.parseInt(json.getString("play_mode"));
-		if(json.isNull("match_type")) matchType = Integer.parseInt(json.getString("match_type"));
-		if(json.isNull("scoring_type")) scoringType = Integer.parseInt(json.getString("scoring_type"));
-		if(json.isNull("team_type")) teamType = Integer.parseInt(json.getString("team_type"));
-		if(json.isNull("mods")) mods = Integer.parseInt(json.getString("mods"));
-	}
-	
-	public Osu getParent(){ return osu; }
-	public int getGameID() { return gameID; }
-	public String getStartTime() { return startTime; }
-	public String getEndTime() { return endTime; }
-	public OsuBeatmap getBeatmap() throws IOException, OsuRateLimitException { return osu.getBeatmap(beatmapID); }
-	public int getBeatmapID() { return beatmapID; }
-	public OsuMode getMode() { return OsuMode.getByID(mode); }
-	public int getModeID() { return mode; }
-	public int getMatchTypeID() { return matchType; }
-	public int getScoringTypeID() { return scoringType; }
-	public int getTeamTypeID() { return teamType; }
-	public int getModIDs() { return mods; }
+    private int gameID;
+    private String startTime;
+    private String endTime;
+    private int beatmapID;
+    private LazilyLoaded<OsuBeatmap> beatmap;
+    private OsuMode playMode;
+    private int matchType;
+    private ScoringType scoringType;
+    private TeamType teamType;
+    private GameMods mods;
+    // TODO: add scores
+
+    public OsuMatchGame(Osu osu, JSONObject json) {
+        gameID = Integer.parseInt(json.getString("game_id"));
+        startTime = json.getString("start_time");
+        endTime = json.getString("end_time");
+        beatmapID = Integer.parseInt(json.getString("beatmap_id"));
+        beatmap = osu.beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder().setBeatmapID(beatmapID).build())
+                .asLazilyLoaded().map(list -> list.get(0));
+        playMode = OsuMode.getByID(Integer.parseInt(json.getString("play_mode")));
+        matchType = Integer.parseInt(json.getString("match_type"));
+        scoringType = ScoringType.getById(Integer.parseInt(json.getString("scoring_type")));
+        teamType = TeamType.getById(Integer.parseInt(json.getString("team_type")));
+        mods = GameMods.parse(Integer.parseInt(json.getString("mods")));
+    }
+
+    public int getGameID() {
+        return gameID;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public int getBeatmapID() {
+        return beatmapID;
+    }
+
+    public LazilyLoaded<OsuBeatmap> getBeatmap() throws IOException, OsuRateLimitException {
+        return beatmap;
+    }
+
+    public OsuMode getMode() {
+        return playMode;
+    }
+
+    public int getMatchTypeID() {
+        return matchType;
+    }
+
+    public ScoringType getScoringType() {
+        return scoringType;
+    }
+
+    public TeamType getTeamType() {
+        return teamType;
+    }
+
+    public GameMods getMods() {
+        return mods;
+    }
 }

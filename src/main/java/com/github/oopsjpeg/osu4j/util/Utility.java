@@ -1,30 +1,39 @@
 package com.github.oopsjpeg.osu4j.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 
 public class Utility {
 
-	public static String readStream(String url) throws IOException {
-		return readStream(new URL(url).openStream());
-	}
-	
-	public static String readStream(URL url) throws IOException {
-		return readStream(url.openStream());
-	}
-	
-	public static String readStream(InputStream stream) throws IOException {
-		try(BufferedReader br = new BufferedReader(new InputStreamReader(stream))){
-			StringBuilder builder = new StringBuilder();
-			int read;
-			char[] chars = new char[1024];
-			while ((read = br.read(chars)) != -1)
-				builder.append(chars, 0, read);
-			return builder.toString();
-		}
-	}
-	
+    // peppy's server offset I'd guess
+    private static final DateTimeFormatter FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive()
+            .appendPattern("u-M-d H:m:s").toFormatter().withZone(ZoneId.of("UTC+8"));
+
+    public static ZonedDateTime parseDate(String dayFromApi) {
+        if (dayFromApi == null) {
+            // Actually bad practice, but we shall allow it for /api/get_match
+            return null;
+        }
+        return ZonedDateTime.parse(dayFromApi, FORMATTER);
+    }
+
+    public static String toMySqlString(ZonedDateTime date) {
+        if (date == null) {
+            return null;
+        }
+        return date.format(FORMATTER);
+    }
+
+    public static String urlEncode(String argument) {
+        try {
+            return URLEncoder.encode(argument, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
