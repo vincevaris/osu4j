@@ -11,8 +11,8 @@ public class GetBeatmapTest {
 
 	public static void main(String[] args) throws OsuAPIException, MalformedURLException {
 		// Create a new Osu object with an API key
-		String KEY = args[0];
-		Osu osu = Osu.getAPI(KEY);
+		String key = args[0];
+		Osu osu = Osu.getAPI(key);
 
 		// Get the beatmap
 		OsuBeatmap beatmap = osu.beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder()

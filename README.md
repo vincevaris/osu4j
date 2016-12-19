@@ -3,43 +3,33 @@ an easy-to-use wrapper for the osu!API, with users, beatmaps, matches, customiza
 
 ## Example 1 - GetUserTest
 ```java
-package com.github.oopsjpeg.osu4j;
-
-import java.io.IOException;
-
-import com.github.oopsjpeg.osu4j.OsuMode;
-import com.github.oopsjpeg.osu4j.Osu;
-import com.github.oopsjpeg.osu4j.OsuScore;
-import com.github.oopsjpeg.osu4j.OsuUser;
-import com.github.oopsjpeg.osu4j.beatmap.OsuBeatmap;
-import com.github.oopsjpeg.osu4j.util.OsuRateLimitException;
-
 public class GetUserTest {
-	
 	private static final String USER = "oopsjpeg";
-	private static final String KEY = "Your osu! API key"; // Replace this with your API key to test.
-	private static final OsuMode MODE = OsuMode.STANDARD;
+	private static final GameMode MODE = GameMode.STANDARD;
 	private static final int TOP_SCORE_LIMIT = 3;
-	
-	public static void main(String[] args) throws OsuRateLimitException, IOException {
+
+	public static void main(String[] args) throws OsuAPIException, MalformedURLException {
 		// Create a new Osu object with an API key
-		Osu osu = new Osu(KEY);
-		
+
 		// Get the user
-		OsuUser user = osu.getUser(USER, MODE).withTopScores(TOP_SCORE_LIMIT);
-		
-		// Print basic information
-		System.out.println(MODE.getName() + " Information for " + user.getUsername());
+		System.out.println("Getting user...");
+		OsuUser user = osu.users.query(new EndpointUsers.ArgumentsBuilder(USER).setMode(MODE).build());
+
+		// Print some user info
+		System.out.println(user.getUsername() + "(" + user.getID() + ")");
 		System.out.println(user.getURL());
 		System.out.println("Rank: #" + user.getRank());
-		System.out.println("Performance Points: " + user.getPP() + "pp");
+		System.out.println("Performance: #" + user.getRank() + " (" + user.getPP() + "pp)");
 		System.out.println("Total Score: " + user.getTotalScore());
-		
-		// Print top scores
-		for(int i = 0; i < user.getTopScores().size(); i++){
-			OsuScore score = user.getTopScores().get(i);
-			OsuBeatmap beatmap = score.getBeatmap();
-			System.out.println("Top score " + (i+1) + ": " + beatmap.getArtist() + " - " + beatmap.getTitle());
+
+		// Get the user's top scores
+		List<OsuScore> topScores = user.getTopScores(TOP_SCORE_LIMIT).get();
+
+		// Print the top scores
+		for (int i = 0; i < topScores.size(); i++) {
+			OsuScore score = topScores.get(i);
+			OsuBeatmap beatmap = score.getBeatmap().get();
+			System.out.println("Top score #" + (i + 1) + ": " + beatmap.toString() + " " + beatmap.getURL());
 		}
 	}
 }
@@ -47,33 +37,25 @@ public class GetUserTest {
 
 ## Example 2 - GetBeatmapTest
 ```java
-import java.io.IOException;
-
-import com.github.oopsjpeg.osu4j.OsuMode;
-import com.github.oopsjpeg.osu4j.Osu;
-import com.github.oopsjpeg.osu4j.beatmap.OsuBeatmap;
-import com.github.oopsjpeg.osu4j.util.OsuRateLimitException;
-
 public class GetBeatmapTest {
-	
 	private static final int BEATMAP_ID = 131891;
-	private static final String KEY = "Your osu! API key"; // Replace this with your API key to test.
-	private static final OsuMode MODE = OsuMode.STANDARD;
-	
-	public static void main(String[] args) throws OsuRateLimitException, IOException {
+
+	public static void main(String[] args) throws OsuAPIException, MalformedURLException {
 		// Create a new Osu object with an API key
-		Osu osu = new Osu(KEY);
-		
+		String KEY = args[0];
+		Osu osu = Osu.getAPI(KEY);
+
 		// Get the beatmap
-		OsuBeatmap beatmap = osu.getBeatmap(BEATMAP_ID, MODE);
-		
+		OsuBeatmap beatmap = osu.beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder()
+				.setBeatmapID(BEATMAP_ID).build())
+				.resolve().get(0);
+
 		// Print information
-		System.out.println(MODE.getName() + " Information for " + beatmap.getArtist() + " - " + beatmap.getTitle());
+		System.out.println(beatmap.toString());
 		System.out.println(beatmap.getURL());
-		System.out.println("Creator: " + beatmap.getCreator());
+		System.out.println("Creator: " + beatmap.getCreatorName());
 		System.out.println("BPM: " + beatmap.getBPM());
-		System.out.println("Difficulty Rating: " + beatmap.getDifficultyRating());
-		
+		System.out.println("Difficulty: " + beatmap.getDifficulty());
 	}
 }
 ```
