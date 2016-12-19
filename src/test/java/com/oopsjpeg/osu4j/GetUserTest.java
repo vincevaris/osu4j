@@ -1,8 +1,12 @@
-# osu4j
-an easy-to-use wrapper for the osu!API, with users, beatmaps, matches, customizable rate limits, et cetera.
+package com.oopsjpeg.osu4j;
 
-## Example 1 - GetUserTest
-```java
+import com.oopsjpeg.osu4j.backend.EndpointUsers;
+import com.oopsjpeg.osu4j.backend.Osu;
+import com.oopsjpeg.osu4j.exception.OsuAPIException;
+
+import java.net.MalformedURLException;
+import java.util.List;
+
 public class GetUserTest {
 	private static final String USER = "oopsjpeg";
 	private static final GameMode MODE = GameMode.STANDARD;
@@ -10,6 +14,8 @@ public class GetUserTest {
 
 	public static void main(String[] args) throws OsuAPIException, MalformedURLException {
 		// Create a new Osu object with an API key
+		String key = args[0];
+		Osu osu = Osu.getAPI(key);
 
 		// Get the user
 		System.out.println("Getting user...");
@@ -33,29 +39,3 @@ public class GetUserTest {
 		}
 	}
 }
-```
-
-## Example 2 - GetBeatmapTest
-```java
-public class GetBeatmapTest {
-	private static final int BEATMAP_ID = 131891;
-
-	public static void main(String[] args) throws OsuAPIException, MalformedURLException {
-		// Create a new Osu object with an API key
-		String KEY = args[0];
-		Osu osu = Osu.getAPI(KEY);
-
-		// Get the beatmap
-		OsuBeatmap beatmap = osu.beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder()
-				.setBeatmapID(BEATMAP_ID).build())
-				.resolve().get(0);
-
-		// Print information
-		System.out.println(beatmap.toString());
-		System.out.println(beatmap.getURL());
-		System.out.println("Creator: " + beatmap.getCreatorName());
-		System.out.println("BPM: " + beatmap.getBPM());
-		System.out.println("Difficulty: " + beatmap.getDifficulty());
-	}
-}
-```
