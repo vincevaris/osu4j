@@ -221,7 +221,7 @@ public class OsuUser extends OsuElement {
 			beatmap = getAPI().beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder()
 					.setBeatmapID(beatmapID).build())
 					.asLazilyLoaded().map(list -> list.get(0));
-			beatmapSetID = obj.get("beatmap_set_id").getAsInt();
+			beatmapSetID = obj.get("beatmapset_id").getAsInt();
 			beatmapSet = getAPI().beatmapSets.getAsQuery(new EndpointBeatmapSet.Arguments(beatmapSetID))
 					.asLazilyLoaded();
 		}
