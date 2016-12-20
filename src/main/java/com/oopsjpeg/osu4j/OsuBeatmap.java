@@ -163,7 +163,7 @@ public class OsuBeatmap extends OsuElement {
 		return diffOverall;
 	}
 
-	public float getOpproach() {
+	public float getApproach() {
 		return diffApproach;
 	}
 
