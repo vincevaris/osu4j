@@ -23,10 +23,10 @@ public class Osu {
 	private static final int READ_TIMEOUT = 10000;
 	private static final int DEFAULT_LIMIT = 120;
 	private static Map<OsuToken, Osu> apiPerToken = Collections.synchronizedMap(new HashMap<>());
-	public final EndpointBeatmapSet beatmapSets = new EndpointBeatmapSet(beatmaps);
 	private OsuToken token;
 	private APIAccess access = new APIAccess();
 	public final EndpointBeatmaps beatmaps = new EndpointBeatmaps(access);
+	public final EndpointBeatmapSet beatmapSets = new EndpointBeatmapSet(beatmaps);
 	public final EndpointMatches matches = new EndpointMatches(access);
 	public final EndpointReplays replays = new EndpointReplays(access);
 	public final EndpointScores scores = new EndpointScores(access);
