@@ -1,5 +1,5 @@
 # osu4j
-an easy-to-use wrapper for the osu!API, with users, beatmaps, matches, customizable rate limits, et cetera.
+an easy-to-use wrapper for the osu! API, complete with users, beatmaps, matches, customizable rate limits, et cetera.
 
 ## Example 1 - GetUserTest
 ```java
@@ -10,6 +10,8 @@ public class GetUserTest {
 
 	public static void main(String[] args) throws OsuAPIException, MalformedURLException {
 		// Create a new Osu object with an API key
+		String key = args[0];
+		Osu osu = Osu.getAPI(key);
 
 		// Get the user
 		System.out.println("Getting user...");
