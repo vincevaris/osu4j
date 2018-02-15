@@ -45,7 +45,7 @@ public class OsuBeatmap extends OsuElement {
 	public OsuBeatmap(Osu api, JsonObject obj) {
 		super(api);
 		approved = ApprovalState.fromID(obj.get("approved").getAsInt());
-		approvedDate = Utility.parseDate(obj.get("approved_date").getAsString());
+		approvedDate = obj.get("approved_date").isJsonNull() ? null : Utility.parseDate(obj.get("approved_date").getAsString());
 		lastUpdate = Utility.parseDate(obj.get("last_update").getAsString());
 		artist = obj.get("artist").getAsString();
 		beatmapID = obj.get("beatmap_id").getAsInt();
