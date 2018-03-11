@@ -23,7 +23,9 @@ public class OsuUser extends OsuElement {
 	private final float level;
 	private final float ppRaw;
 	private final float accuracy;
+	private final int countRankSSH;
 	private final int countRankSS;
+	private final int countRankSH;
 	private final int countRankS;
 	private final int countRankA;
 	private final CountryCode country;
