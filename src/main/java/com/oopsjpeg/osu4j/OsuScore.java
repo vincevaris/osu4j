@@ -27,7 +27,6 @@ public class OsuScore extends OsuElement {
 	private final ZonedDateTime date;
 	private final String rank;
 	private final float pp;
-	private final int replayAvailable;
 
 	public OsuScore(Osu api, JsonObject obj) {
 		super(api);
@@ -46,7 +45,6 @@ public class OsuScore extends OsuElement {
 		date = Utility.parseDate(obj.get("date").getAsString());
 		rank = obj.get("rank").getAsString();
 		pp = obj.get("pp").getAsFloat();
-		replayAvailable = obj.get("replay_available").getAsInt();
 
 		beatmap = getAPI().beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder()
 				.setBeatmapID(beatmapID).build())
@@ -75,7 +73,6 @@ public class OsuScore extends OsuElement {
 		this.date = other.date;
 		this.rank = other.rank;
 		this.pp = other.pp;
-		this.replayAvailable = other.replayAvailable;
 	}
 
 	public int getBeatmapID() {
@@ -148,9 +145,5 @@ public class OsuScore extends OsuElement {
 
 	public float getPp() {
 		return pp;
-	}
-
-	public boolean isReplayAvailable() {
-		return replayAvailable == 1;
 	}
 }
