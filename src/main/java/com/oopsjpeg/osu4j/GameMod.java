@@ -1,60 +1,71 @@
 package com.oopsjpeg.osu4j;
 
-import java.util.EnumSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum GameMod {
-	None(0, "None"),
-	NoFail(1, "No-fail"),
-	Easy(2, "Easy"),
-	NoVideo(4, "No Video"),
-	Hidden(8, "Hidden"),
-	HardRock(16, "Hard Rock"),
-	SuddenDeath(32, "Sudden Death"),
-	DoubleTime(64, "Double Time"),
-	Relax(128, "Relax"),
-	HalfTime(256, "Halftime"),
-	Nightcore(512, "Nightcore"),
-	Flashlight(1024, "Flashlight"),
-	Autoplay(2048, "Auto-play"),
-	SpunOut(4096, "Spun Out"),
-	Autopilot(8192, "Autopilot"),
-	Perfect(16384, "Perfect"),
-	Key4(32768, "4K"),
-	Key5(65536, "5K"),
-	Key6(131072, "6K"),
-	Key7(262144, "7K"),
-	Key8(524288, "8K"),
-	FadeIn(1048576, "Fade-in"),
-	Random(2097152, "Random"),
-	LastMod(4194304, "Last GameMod"),
-	Key9(16777216, "9K"),
-	Key10(33554432, "10K"),
-	Key1(67108864, "1K"),
-	Key3(134217728, "3K"),
-	Key2(268435456, "2K");
+	NO_FAIL(1, "No Fail"),
+	EASY(2, "Easy"),
+	TOUCH_DEVICE(4, "Touch Device"),
+	HIDDEN(8, "Hidden"),
+	HARD_ROCK(16, "Hard Rock"),
+	SUDDEN_DEATH(32, "Sudden Death"),
+	DOUBLE_TIME(64, "Double Time"),
+	RELAX(128, "Relax"),
+	HALF_TIME(256, "Half Time"),
+	NIGHTCORE(512, "Nightcore"),
+	FLASHLIGHT(1024, "Flashlight"),
+	AUTOPLAY(2048, "Autoplay"),
+	SPUNOUT(4096, "Spunout"),
+	AUTOPILOT(8192, "Autopilot"),
+	PERFECT(16384, "Perfect"),
+	KEY_4(32768, "4K"),
+	KEY_5(65536, "5K"),
+	KEY_6(131072, "6K"),
+	KEY_7(262144, "7K"),
+	KEY_8(524288, "8K"),
+	FADE_IN(1048576, "Fade-In"),
+	RANDOM(2097152, "Random"),
+	CINEMA(4194304, "Cinema"),
+	TARGET(8388608, "Target Practice"),
+	KEY_9(16777216, "9K"),
+	KEY_COOP(33554432, "Co-Op"),
+	KEY_1(67108864, "1K"),
+	KEY_3(134217728, "3K"),
+	KEY_2(268435456, "2K"),
+	SCORE_V2(536870912, "Score v2"),
+	LAST_MOD(1073741824, "Last Mod");
 
-	private final long flag;
+	private final long bit;
 	private final String name;
 
-	GameMod(int flag, String name) {
-		this.flag = flag;
+	GameMod(int bit, String name) {
+		this.bit = bit;
 		this.name = name;
 	}
 
-	public static GameMod fromFlag(long flag) {
-		for (GameMod m : values())
-			if (m.flag == flag) return m;
-		return null;
+	public static GameMod[] get(long bit) {
+		// The list of mods to loop through
+		List<GameMod> values = Arrays.stream(values())
+				.sorted(Comparator.comparingLong(GameMod::getBit))
+				.sorted(Comparator.reverseOrder())
+				.collect(Collectors.toList());
+		// The list of mods to return (will convert to array)
+		List<GameMod> mods = new ArrayList<>();
+
+		while (bit > 0) for (GameMod mod : values) if (mod.bit <= bit) {
+			mods.add(mod);
+			bit -= mod.bit;
+		}
+
+		return mods.toArray(new GameMod[mods.size()]);
 	}
 
-	public static EnumSet<GameMod> fromFlags(long flags) {
-		EnumSet<GameMod> set = EnumSet.noneOf(GameMod.class);
-		for (GameMod m : values()) if ((flags & m.flag) == m.flag) set.add(m);
-		return set;
-	}
-
-	public long getFlag() {
-		return flag;
+	public long getBit() {
+		return bit;
 	}
 
 	public String getName() {
@@ -63,6 +74,6 @@ public enum GameMod {
 
 	@Override
 	public String toString() {
-		return name;
+		return getName();
 	}
 }

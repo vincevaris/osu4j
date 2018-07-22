@@ -22,7 +22,7 @@ public class OsuScore extends OsuElement {
 	private final int countkatu;
 	private final int countgeki;
 	private final boolean perfect;
-	private final EnumSet<GameMod> enabledMods;
+	private final GameMod[] enabledMods;
 	private final int userID;
 	private final LazilyLoaded<OsuUser> user;
 	private final ZonedDateTime date;
@@ -41,7 +41,7 @@ public class OsuScore extends OsuElement {
 		countkatu = obj.get("countkatu").getAsInt();
 		countgeki = obj.get("countgeki").getAsInt();
 		perfect = obj.get("perfect").getAsInt() == 1;
-		enabledMods = GameMod.fromFlags(obj.get("enabled_mods").getAsLong());
+		enabledMods = GameMod.get(obj.get("enabled_mods").getAsLong());
 		userID = obj.get("user_id").getAsInt();
 		date = Utility.parseDate(obj.get("date").getAsString());
 		rank = obj.get("rank").getAsString();
@@ -124,7 +124,7 @@ public class OsuScore extends OsuElement {
 		return perfect;
 	}
 
-	public EnumSet<GameMod> getEnabledMods() {
+	public GameMod[] getEnabledMods() {
 		return enabledMods;
 	}
 

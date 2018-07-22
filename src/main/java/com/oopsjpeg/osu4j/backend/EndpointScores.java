@@ -43,7 +43,7 @@ public class EndpointScores implements Endpoint<Arguments, List<OsuScore>> {
 				arguments.put("type", user.isTextualID() ? "string" : "id");
 			});
 			builder.mode.ifPresent(mode -> arguments.put("m", Integer.toString(mode.getID())));
-			builder.mods.ifPresent(mods -> arguments.put("mods", Long.toString(mods.stream().mapToLong(GameMod::getFlag).sum())));
+			builder.mods.ifPresent(mods -> arguments.put("mods", Long.toString(mods.stream().mapToLong(GameMod::getBit).sum())));
 			builder.limit.ifPresent(l -> arguments.put("limit", Integer.toString(l)));
 			this.arguments = Collections.unmodifiableMap(arguments);
 		}

@@ -136,7 +136,7 @@ public class OsuMatch extends OsuElement {
 		private final int matchType;
 		private final ScoringType scoringType;
 		private final TeamType teamType;
-		private final EnumSet<GameMod> mods;
+		private final GameMod[] mods;
 		private final List<Score> scores;
 		private ZonedDateTime startTime;
 		private ZonedDateTime endTime;
@@ -151,7 +151,7 @@ public class OsuMatch extends OsuElement {
 			matchType = obj.get("match_type").getAsInt();
 			scoringType = ScoringType.fromID(obj.get("scoring_type").getAsInt());
 			teamType = TeamType.fromID(obj.get("team_type").getAsInt());
-			mods = GameMod.fromFlags(obj.get("mods").getAsLong());
+			mods = GameMod.get(obj.get("mods").getAsLong());
 			scores = new ArrayList<>();
 			obj.getAsJsonArray("scores").forEach(e -> this.scores.add(new Score(e.getAsJsonObject())));
 
@@ -211,7 +211,7 @@ public class OsuMatch extends OsuElement {
 			return teamType;
 		}
 
-		public EnumSet<GameMod> getMods() {
+		public GameMod[] getMods() {
 			return mods;
 		}
 
