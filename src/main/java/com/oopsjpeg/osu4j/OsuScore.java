@@ -8,7 +8,6 @@ import com.oopsjpeg.osu4j.backend.Osu;
 import com.oopsjpeg.osu4j.util.Utility;
 
 import java.time.ZonedDateTime;
-import java.util.EnumSet;
 
 public class OsuScore extends OsuElement {
 	private final int beatmapID;

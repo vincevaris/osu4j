@@ -9,7 +9,6 @@ import com.oopsjpeg.osu4j.util.Utility;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 
 public class OsuMatch extends OsuElement {

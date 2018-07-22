@@ -56,10 +56,11 @@ public enum GameMod {
 		// The list of mods to return (will convert to array)
 		List<GameMod> mods = new ArrayList<>();
 
-		while (bit > 0) for (GameMod mod : values) if (mod.bit <= bit) {
-			mods.add(mod);
-			bit -= mod.bit;
-		}
+		while (bit > 0) for (GameMod mod : values)
+			if (mod.bit <= bit) {
+				mods.add(mod);
+				bit -= mod.bit;
+			}
 
 		return mods.toArray(new GameMod[mods.size()]);
 	}

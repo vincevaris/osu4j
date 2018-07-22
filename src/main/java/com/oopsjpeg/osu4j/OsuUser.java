@@ -23,10 +23,10 @@ public class OsuUser extends OsuElement {
 	private final float level;
 	private final float ppRaw;
 	private final float accuracy;
-	private final int countRankSSH;
 	private final int countRankSS;
-	private final int countRankSH;
+	private final int countRankSSH;
 	private final int countRankS;
+	private final int countRankSH;
 	private final int countRankA;
 	private final CountryCode country;
 	private final int ppCountryRank;
@@ -53,10 +53,10 @@ public class OsuUser extends OsuElement {
 		level = obj.get("level").getAsFloat();
 		ppRaw = obj.get("pp_raw").getAsFloat();
 		accuracy = obj.get("accuracy").getAsFloat();
-		countRankSSH = obj.get("count_rank_ssh").getAsInt();
 		countRankSS = obj.get("count_rank_ss").getAsInt();
-		countRankSH = obj.get("count_rank_sh").getAsInt();
+		countRankSSH = obj.get("count_rank_ssh").getAsInt();
 		countRankS = obj.get("count_rank_s").getAsInt();
+		countRankSH = obj.get("count_rank_sh").getAsInt();
 		countRankA = obj.get("count_rank_a").getAsInt();
 		country = CountryCode.getByCodeIgnoreCase(obj.get("country").getAsString());
 		ppCountryRank = obj.get("pp_country_rank").getAsInt();
@@ -174,7 +174,7 @@ public class OsuUser extends OsuElement {
 	public int getCountRankSSH() {
 		return countRankSSH;
 	}
-	
+
 	public int getCountRankSS() {
 		return countRankSS;
 	}

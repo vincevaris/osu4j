@@ -11,6 +11,7 @@ public class SimpleItemCache<T> implements Cache<T> {
 	private volatile T cached;
 	private volatile boolean isCached;
 	private List<SimpleMappedItemCache<?>> children = new ArrayList<>();
+
 	public SimpleItemCache() {
 	}
 
