@@ -27,10 +27,13 @@ public class OsuScore extends OsuElement {
 	private final ZonedDateTime date;
 	private final String rank;
 	private final float pp;
+	private final boolean hadPp;
 
 	public OsuScore(Osu api, JsonObject obj) {
-		super(api);
-		beatmapID = obj.get("beatmap_id").getAsInt();
+        super(api);
+        float pp1;
+        boolean hadPp;
+        beatmapID = obj.get("beatmap_id").getAsInt();
 		score = obj.get("score").getAsInt();
 		maxcombo = obj.get("maxcombo").getAsInt();
 		count300 = obj.get("count300").getAsInt();
@@ -44,9 +47,17 @@ public class OsuScore extends OsuElement {
 		userID = obj.get("user_id").getAsInt();
 		date = Utility.parseDate(obj.get("date").getAsString());
 		rank = obj.get("rank").getAsString();
-		pp = obj.get("pp").getAsFloat();
-
-		beatmap = getAPI().beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder()
+		try {
+		    hadPp = true;
+            pp1 = obj.get("pp").getAsFloat();
+        }
+        catch (NullPointerException e) {
+		    pp1 = 0.0f;
+		    hadPp = false;
+        }
+        this.hadPp = hadPp;
+        pp = pp1;
+        beatmap = getAPI().beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder()
 				.setBeatmapID(beatmapID).build())
 				.asLazilyLoaded().map(list -> list.get(0));
 
@@ -73,6 +84,7 @@ public class OsuScore extends OsuElement {
 		this.date = other.date;
 		this.rank = other.rank;
 		this.pp = other.pp;
+		this.hadPp = other.hadPp;
 	}
 
 	public int getBeatmapID() {
@@ -146,4 +158,8 @@ public class OsuScore extends OsuElement {
 	public float getPp() {
 		return pp;
 	}
+
+	public boolean hadPp() {
+	    return hadPp;
+    }
 }
