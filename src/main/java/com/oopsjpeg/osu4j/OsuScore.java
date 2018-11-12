@@ -27,7 +27,6 @@ public class OsuScore extends OsuElement {
     private ZonedDateTime date;
     private String rank;
     private float pp;
-    private boolean hadPp;
 
     public OsuScore(Osu api, JsonObject obj) {
         super(api);
@@ -72,7 +71,6 @@ public class OsuScore extends OsuElement {
         this.date = other.date;
         this.rank = other.rank;
         this.pp = other.pp;
-        this.hadPp = other.hadPp;
     }
 
     public int getBeatmapID() {
@@ -147,7 +145,4 @@ public class OsuScore extends OsuElement {
         return pp;
     }
 
-    public boolean hadPp() {
-        return hadPp;
-    }
 }
