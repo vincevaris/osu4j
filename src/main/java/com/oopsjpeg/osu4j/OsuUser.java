@@ -62,7 +62,6 @@ public class OsuUser extends OsuElement {
         if (obj.has("pp_country_rank")) ppCountryRank = obj.get("pp_country_rank").getAsInt();
         events = new ArrayList<>();
         if (obj.has("events")) obj.getAsJsonArray("events").forEach(e -> new Event((JsonObject) e));
-
         this.mode = mode;
     }
 
