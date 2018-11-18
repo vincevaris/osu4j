@@ -144,7 +144,7 @@ public class OsuMatch extends OsuElement {
             super(OsuMatch.this.getAPI());
             gameID = obj.get("game_id").getAsInt();
             startTime = Utility.parseDate(obj.get("start_time").getAsString());
-            if (obj.has("end_time")) {
+            if (obj.has("end_time") && !obj.get("end_time").isJsonNull()) {
                 endTime = Utility.parseDate(obj.get("end_time").getAsString());
             } else {
                 endTime = ZonedDateTime.now();
