@@ -16,6 +16,7 @@ public class OsuMatch extends OsuElement {
     private int matchID;
     private String name;
     private ZonedDateTime startTime;
+    private ZonedDateTime endTime;
 
     public OsuMatch(Osu api, JsonObject obj) {
         // todo implement end time?
@@ -24,6 +25,7 @@ public class OsuMatch extends OsuElement {
         if (match.has("match_id")) matchID = match.get("match_id").getAsInt();
         if (match.has("name")) name = match.get("name").getAsString();
         if (match.has("start_time")) startTime = Utility.parseDate(match.get("start_time").getAsString());
+        if (match.has("end_time")) endTime = Utility.parseDate(match.get("end_time").getAsString());
         this.games = new ArrayList<>();
         if (obj.has("games")) obj.getAsJsonArray("games").forEach(e -> this.games.add(new Game(e.getAsJsonObject())));
     }
@@ -33,7 +35,7 @@ public class OsuMatch extends OsuElement {
         this.matchID = other.matchID;
         this.name = other.name;
         this.startTime = other.startTime;
-        // this.endTime = other.endTime;
+        this.endTime = other.endTime;
         this.games = other.games;
     }
 
@@ -49,9 +51,9 @@ public class OsuMatch extends OsuElement {
         return startTime;
     }
 
-    //public ZonedDateTime getEndDate() {
-    //	return endDate;
-    //}
+    public ZonedDateTime getEndTime() {
+        return endTime;
+    }
 
     public List<Game> getGames() {
         return games;
@@ -142,7 +144,11 @@ public class OsuMatch extends OsuElement {
             super(OsuMatch.this.getAPI());
             gameID = obj.get("game_id").getAsInt();
             startTime = Utility.parseDate(obj.get("start_time").getAsString());
-            endTime = Utility.parseDate(obj.get("end_time").getAsString());
+            if (obj.has("end_time")) {
+                endTime = Utility.parseDate(obj.get("end_time").getAsString());
+            } else {
+                endTime = ZonedDateTime.now();
+            }
             beatmapID = obj.get("beatmap_id").getAsInt();
             playMode = GameMode.fromID(obj.get("play_mode").getAsInt());
             matchType = obj.get("match_type").getAsInt();
