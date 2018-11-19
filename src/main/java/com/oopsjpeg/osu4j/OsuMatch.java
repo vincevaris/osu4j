@@ -223,20 +223,20 @@ public class OsuMatch extends OsuElement {
         }
 
         public class Score extends OsuElement {
-            private final int slot;
-            private final int team;
-            private final int userID;
-            private final LazilyLoaded<OsuUser> user;
-            private final int score;
+            final int slot;
+            final int team;
+            final int userID;
+            final LazilyLoaded<OsuUser> user;
+            final int score;
             // private final int rank; Not used!
-            private final int count50;
-            private final int count100;
-            private final int count300;
-            private final int countmiss;
-            private final int countgeki;
-            private final int countkatu;
-            private final boolean perfect;
-            private final boolean pass;
+            final int count50;
+            final int count100;
+            final int count300;
+            final int countMiss;
+            final int countGeki;
+            final int countKatu;
+            final boolean perfect;
+            final boolean pass;
 
             public Score(JsonObject obj) {
                 super(Game.this.getAPI());
@@ -247,9 +247,9 @@ public class OsuMatch extends OsuElement {
                 count50 = obj.get("count50").getAsInt();
                 count100 = obj.get("count100").getAsInt();
                 count300 = obj.get("count300").getAsInt();
-                countmiss = obj.get("countmiss").getAsInt();
-                countgeki = obj.get("countgeki").getAsInt();
-                countkatu = obj.get("countkatu").getAsInt();
+                countMiss = obj.get("countmiss").getAsInt();
+                countGeki = obj.get("countgeki").getAsInt();
+                countKatu = obj.get("countkatu").getAsInt();
                 perfect = obj.get("perfect").getAsInt() == 1;
                 pass = obj.get("pass").getAsInt() == 1;
 
@@ -268,9 +268,9 @@ public class OsuMatch extends OsuElement {
                 this.count50 = other.count50;
                 this.count100 = other.count100;
                 this.count300 = other.count300;
-                this.countmiss = other.countmiss;
-                this.countgeki = other.countgeki;
-                this.countkatu = other.countkatu;
+                this.countMiss = other.countMiss;
+                this.countGeki = other.countGeki;
+                this.countKatu = other.countKatu;
                 this.perfect = other.perfect;
                 this.pass = other.pass;
             }
