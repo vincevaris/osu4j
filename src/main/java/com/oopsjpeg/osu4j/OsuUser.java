@@ -233,19 +233,19 @@ public class OsuUser extends OsuElement {
 
         public Event(JsonObject obj) {
             super(OsuUser.this.getAPI());
-            if (obj.has("display_html")) {
+            if (obj.has("display_html") && !obj.get("display_html").isJsonNull()) {
                 displayHTML = obj.get("display_html").getAsString();
             }
-            if (obj.has("beatmap_id")) {
+            if (obj.has("beatmap_id") && !obj.get("beatmap_id").isJsonNull()) {
                 beatmapID = obj.get("beatmap_id").getAsInt();
             }
 
-            if (obj.has("beatmap_id")) {
+            if (obj.has("beatmap_id") && !obj.get("beatmap_id").isJsonNull()) {
                 beatmap = getAPI().beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder()
                         .setBeatmapID(obj.get("beatmap_id").getAsInt()).build())
                         .asLazilyLoaded().map(list -> list.get(0));
             }
-            if (obj.has("beatmapset_id")) {
+            if (obj.has("beatmapset_id") && !obj.get("beatmapset_id").isJsonNull()) {
                 beatmapSetID = obj.get("beatmapset_id").getAsInt();
             }
 
