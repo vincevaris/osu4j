@@ -274,6 +274,58 @@ public class OsuMatch extends OsuElement {
                 this.perfect = other.perfect;
                 this.pass = other.pass;
             }
+
+            public int getSlot() {
+                return slot;
+            }
+
+            public int getTeam() {
+                return team;
+            }
+
+            public int getUserID() {
+                return userID;
+            }
+
+            public LazilyLoaded<OsuUser> getUser() {
+                return user;
+            }
+
+            public int getScore() {
+                return score;
+            }
+
+            public int getCount50() {
+                return count50;
+            }
+
+            public int getCount100() {
+                return count100;
+            }
+
+            public int getCount300() {
+                return count300;
+            }
+
+            public int getCountMiss() {
+                return countMiss;
+            }
+
+            public int getCountGeki() {
+                return countGeki;
+            }
+
+            public int getCountKatu() {
+                return countKatu;
+            }
+
+            public boolean isPerfect() {
+                return perfect;
+            }
+
+            public boolean isPass() {
+                return pass;
+            }
         }
     }
 
