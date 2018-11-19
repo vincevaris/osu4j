@@ -113,6 +113,10 @@ public class OsuMatch extends OsuElement {
             return null;
         }
 
+        public static boolean isTeamMode(TeamType type) {
+            return type == TEAM_VS || type == TAG_TEAM_VS;
+        }
+
         public int getID() {
             return id;
         }
