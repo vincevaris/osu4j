@@ -287,6 +287,19 @@ public class OsuMatch extends OsuElement {
                 return team;
             }
 
+            public String getTeamStr() {
+                switch (team) {
+                    case 0:
+                        return "none";
+                    case 1:
+                        return "blue";
+                    case 2:
+                        return "red";
+                }
+
+                return "none";
+            }
+
             public int getUserID() {
                 return userID;
             }
