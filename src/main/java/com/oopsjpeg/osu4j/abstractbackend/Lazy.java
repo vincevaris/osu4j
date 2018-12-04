@@ -12,18 +12,18 @@ import java.util.function.Function;
  * @param <R> the result type
  * @author WorldSEnder
  */
-public class LazilyLoaded<R> {
+public class Lazy<R> {
 	private final HideQueryType<?, R> hiddenQuery;
 
-	public LazilyLoaded(Query<R> query) {
+	public Lazy(Query<R> query) {
 		this(query, new SimpleItemCache<>());
 	}
 
-	public <T> LazilyLoaded(Query<T> query, MappedCache<T, R> cache) {
+	public <T> Lazy(Query<T> query, MappedCache<T, R> cache) {
 		this.hiddenQuery = new HideQueryType<>(query, cache);
 	}
 
-	private LazilyLoaded(HideQueryType<?, R> hiddenQuery) {
+	private Lazy(HideQueryType<?, R> hiddenQuery) {
 		this.hiddenQuery = hiddenQuery;
 	}
 
@@ -31,9 +31,9 @@ public class LazilyLoaded<R> {
 		return hiddenQuery.get();
 	}
 
-	public <S> LazilyLoaded<S> map(Function<R, S> mapper) {
+	public <S> Lazy<S> map(Function<R, S> mapper) {
 		HideQueryType<?, S> mappedHiddenQuery = hiddenQuery.map(mapper);
-		return new LazilyLoaded<>(mappedHiddenQuery);
+		return new Lazy<>(mappedHiddenQuery);
 	}
 
 	private static class HideQueryType<T, R> {

@@ -1,7 +1,7 @@
 package com.oopsjpeg.osu4j;
 
 import com.google.gson.JsonObject;
-import com.oopsjpeg.osu4j.abstractbackend.LazilyLoaded;
+import com.oopsjpeg.osu4j.abstractbackend.Lazy;
 import com.oopsjpeg.osu4j.backend.EndpointBeatmaps;
 import com.oopsjpeg.osu4j.backend.EndpointUsers;
 import com.oopsjpeg.osu4j.backend.Osu;
@@ -134,7 +134,7 @@ public class OsuMatch extends OsuElement {
     public class Game extends OsuElement {
         private final int gameID;
         private final int beatmapID;
-        private final LazilyLoaded<OsuBeatmap> beatmap;
+        private final Lazy<OsuBeatmap> beatmap;
         private final GameMode playMode;
         private final int matchType;
         private final ScoringType scoringType;
@@ -198,7 +198,7 @@ public class OsuMatch extends OsuElement {
             return beatmapID;
         }
 
-        public LazilyLoaded<OsuBeatmap> getBeatmap() {
+        public Lazy<OsuBeatmap> getBeatmap() {
             return beatmap;
         }
 
@@ -230,7 +230,7 @@ public class OsuMatch extends OsuElement {
             final int slot;
             final int team;
             final int userID;
-            final LazilyLoaded<OsuUser> user;
+            final Lazy<OsuUser> user;
             final int score;
             // private final int rank; Not used!
             final int count50;
@@ -304,7 +304,7 @@ public class OsuMatch extends OsuElement {
                 return userID;
             }
 
-            public LazilyLoaded<OsuUser> getUser() {
+            public Lazy<OsuUser> getUser() {
                 return user;
             }
 

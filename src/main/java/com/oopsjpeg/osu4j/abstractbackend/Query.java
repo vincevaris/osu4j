@@ -21,12 +21,12 @@ public final class Query<R> {
 		return filledEndpoint.resolve();
 	}
 
-	public LazilyLoaded<R> asLazilyLoaded() {
+	public Lazy<R> asLazilyLoaded() {
 		return getLazyResult(filledEndpoint.getDefaultCache());
 	}
 
-	public LazilyLoaded<R> getLazyResult(Cache<R> cacheToUse) {
-		return new LazilyLoaded<>(this, cacheToUse);
+	public Lazy<R> getLazyResult(Cache<R> cacheToUse) {
+		return new Lazy<>(this, cacheToUse);
 	}
 
 	@Override

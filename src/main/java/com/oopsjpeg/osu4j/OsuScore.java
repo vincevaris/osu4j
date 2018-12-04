@@ -1,7 +1,7 @@
 package com.oopsjpeg.osu4j;
 
 import com.google.gson.JsonObject;
-import com.oopsjpeg.osu4j.abstractbackend.LazilyLoaded;
+import com.oopsjpeg.osu4j.abstractbackend.Lazy;
 import com.oopsjpeg.osu4j.backend.EndpointBeatmaps;
 import com.oopsjpeg.osu4j.backend.EndpointUsers;
 import com.oopsjpeg.osu4j.backend.Osu;
@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 
 public class OsuScore extends OsuElement {
     private int beatmapID = -1;
-    private LazilyLoaded<OsuBeatmap> beatmap;
+    private Lazy<OsuBeatmap> beatmap;
     private int score;
     private int maxcombo;
     private int count300;
@@ -23,7 +23,7 @@ public class OsuScore extends OsuElement {
     private boolean perfect;
     private GameMod[] enabledMods;
     private int userID = -1;
-    private LazilyLoaded<OsuUser> user;
+    private Lazy<OsuUser> user;
     private ZonedDateTime date;
     private String rank;
     private float pp;
@@ -77,7 +77,7 @@ public class OsuScore extends OsuElement {
         return beatmapID;
     }
 
-    public LazilyLoaded<OsuBeatmap> getBeatmap() {
+    public Lazy<OsuBeatmap> getBeatmap() {
         return beatmap;
     }
 
@@ -129,7 +129,7 @@ public class OsuScore extends OsuElement {
         return userID;
     }
 
-    public LazilyLoaded<OsuUser> getUser() {
+    public Lazy<OsuUser> getUser() {
         return user;
     }
 

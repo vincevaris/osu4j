@@ -1,7 +1,7 @@
 package com.oopsjpeg.osu4j;
 
 import com.google.gson.JsonObject;
-import com.oopsjpeg.osu4j.abstractbackend.LazilyLoaded;
+import com.oopsjpeg.osu4j.abstractbackend.Lazy;
 import com.oopsjpeg.osu4j.backend.EndpointBeatmapSet;
 import com.oopsjpeg.osu4j.backend.EndpointUsers;
 import com.oopsjpeg.osu4j.backend.Osu;
@@ -18,10 +18,10 @@ public class OsuBeatmap extends OsuElement {
 	private final String artist;
 	private final int beatmapID;
 	private final int beatmapSetID;
-	private final LazilyLoaded<OsuBeatmapSet> beatmapSet;
+	private final Lazy<OsuBeatmapSet> beatmapSet;
 	private final float bpm;
 	private final String creatorName;
-	private final LazilyLoaded<OsuUser> creator;
+	private final Lazy<OsuUser> creator;
 	private final float difficultyrating;
 	private final float diffSize;
 	private final float diffOverall;
@@ -135,7 +135,7 @@ public class OsuBeatmap extends OsuElement {
 		return beatmapSetID;
 	}
 
-	public LazilyLoaded<OsuBeatmapSet> getBeatmapSet() {
+	public Lazy<OsuBeatmapSet> getBeatmapSet() {
 		return beatmapSet;
 	}
 
@@ -147,7 +147,7 @@ public class OsuBeatmap extends OsuElement {
 		return creatorName;
 	}
 
-	public LazilyLoaded<OsuUser> getCreator() {
+	public Lazy<OsuUser> getCreator() {
 		return creator;
 	}
 
