@@ -7,21 +7,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum GameMod {
-	NO_FAIL(1, "No Fail"),
-	EASY(2, "Easy"),
-	TOUCH_DEVICE(4, "Touch Device"),
-	HIDDEN(8, "Hidden"),
-	HARD_ROCK(16, "Hard Rock"),
-	SUDDEN_DEATH(32, "Sudden Death"),
-	DOUBLE_TIME(64, "Double Time"),
-	RELAX(128, "Relax"),
-	HALF_TIME(256, "Half Time"),
-	NIGHTCORE(512, "Nightcore"),
-	FLASHLIGHT(1024, "Flashlight"),
-	AUTOPLAY(2048, "Autoplay"),
-	SPUNOUT(4096, "Spunout"),
-	AUTOPILOT(8192, "Autopilot"),
-	PERFECT(16384, "Perfect"),
+	NO_FAIL(1, "No Fail", "NF"),
+	EASY(2, "Easy", "EZ"),
+	TOUCH_DEVICE(4, "Touch Device", "TD"),
+	HIDDEN(8, "Hidden", "HD"),
+	HARD_ROCK(16, "Hard Rock", "HR"),
+	SUDDEN_DEATH(32, "Sudden Death", "SD"),
+	DOUBLE_TIME(64, "Double Time", "DT"),
+	RELAX(128, "Relax", "RX"),
+	HALF_TIME(256, "Half Time", "HT"),
+	NIGHTCORE(512, "Nightcore", "HC"),
+	FLASHLIGHT(1024, "Flashlight", "FL"),
+	AUTOPLAY(2048, "Autoplay", "AP"),
+	SPUNOUT(4096, "Spunout", "SO"),
+	AUTOPILOT(8192, "Autopilot", "PI"),
+	PERFECT(16384, "Perfect", "PF"),
 	KEY_4(32768, "4K"),
 	KEY_5(65536, "5K"),
 	KEY_6(131072, "6K"),
@@ -41,11 +41,18 @@ public enum GameMod {
 
 	private final long bit;
 	private final String name;
+	private final String shortName;
 
-	GameMod(int bit, String name) {
+	GameMod(int bit, String name, String shortName) {
 		this.bit = bit;
 		this.name = name;
+		this.shortName = shortName;
 	}
+
+	GameMod(int bit, String name) {
+		this(bit, name, name);
+	}
+
 
 	public static GameMod[] get(long bit) {
 		// The list of mods to loop through
@@ -62,7 +69,20 @@ public enum GameMod {
 				bit -= mod.bit;
 			}
 
-		return mods.toArray(new GameMod[mods.size()]);
+		return mods.toArray(new GameMod[0]);
+	}
+
+	public static String toShortName(long bit) {
+		return toShortName(get(bit));
+	}
+
+	public static String toShortName(GameMod[] mods) {
+		StringBuilder sb = new StringBuilder();
+		for (GameMod mod : mods) {
+			sb.append(mod.shortName);
+		}
+
+		return sb.toString();
 	}
 
 	public long getBit() {
@@ -71,6 +91,10 @@ public enum GameMod {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getShortName() {
+		return shortName;
 	}
 
 	@Override

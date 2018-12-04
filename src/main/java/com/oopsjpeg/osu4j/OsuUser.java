@@ -3,7 +3,11 @@ package com.oopsjpeg.osu4j;
 import com.google.gson.JsonObject;
 import com.neovisionaries.i18n.CountryCode;
 import com.oopsjpeg.osu4j.abstractbackend.LazilyLoaded;
-import com.oopsjpeg.osu4j.backend.*;
+import com.oopsjpeg.osu4j.backend.EndpointBeatmapSet;
+import com.oopsjpeg.osu4j.backend.EndpointBeatmaps;
+import com.oopsjpeg.osu4j.backend.EndpointUserBests;
+import com.oopsjpeg.osu4j.backend.EndpointUserRecents;
+import com.oopsjpeg.osu4j.backend.Osu;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -221,22 +225,34 @@ public class OsuUser extends OsuElement {
     }
 
     private class Event extends OsuElement {
-        private final String displayHTML;
-        private final int beatmapID;
-        private final LazilyLoaded<OsuBeatmap> beatmap;
-        private final int beatmapSetID;
-        private final LazilyLoaded<OsuBeatmapSet> beatmapSet;
+        private String displayHTML;
+        private int beatmapID;
+        private LazilyLoaded<OsuBeatmap> beatmap;
+        private int beatmapSetID;
+        private LazilyLoaded<OsuBeatmapSet> beatmapSet;
 
         public Event(JsonObject obj) {
             super(OsuUser.this.getAPI());
-            displayHTML = obj.get("display_html").getAsString();
-            beatmapID = obj.get("beatmap_id").getAsInt();
-            beatmap = getAPI().beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder()
-                    .setBeatmapID(beatmapID).build())
-                    .asLazilyLoaded().map(list -> list.get(0));
-            beatmapSetID = obj.get("beatmapset_id").getAsInt();
-            beatmapSet = getAPI().beatmapSets.getAsQuery(new EndpointBeatmapSet.Arguments(beatmapSetID))
-                    .asLazilyLoaded();
+            if (obj.has("display_html") && !obj.get("display_html").isJsonNull()) {
+                displayHTML = obj.get("display_html").getAsString();
+            }
+            if (obj.has("beatmap_id") && !obj.get("beatmap_id").isJsonNull()) {
+                beatmapID = obj.get("beatmap_id").getAsInt();
+            }
+
+            if (obj.has("beatmap_id") && !obj.get("beatmap_id").isJsonNull()) {
+                beatmap = getAPI().beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder()
+                        .setBeatmapID(obj.get("beatmap_id").getAsInt()).build())
+                        .asLazilyLoaded().map(list -> list.get(0));
+            }
+            if (obj.has("beatmapset_id") && !obj.get("beatmapset_id").isJsonNull()) {
+                beatmapSetID = obj.get("beatmapset_id").getAsInt();
+            }
+
+            if (obj.has("beatmapset_id")) {
+                beatmapSet = getAPI().beatmapSets.getAsQuery(new EndpointBeatmapSet.Arguments(obj.get("beatmapset_id").getAsInt()))
+                        .asLazilyLoaded();
+            }
         }
 
         public Event(Event other) {

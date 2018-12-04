@@ -24,9 +24,9 @@ public class EndpointMatches implements Endpoint<Arguments, OsuMatch> {
 
 	@Override
 	public OsuMatch query(Arguments arguments) throws OsuAPIException {
-		JsonArray beatmapUser = api.getRESTfulArray(API_ENDPOINT, arguments.asURLArguments());
-		JsonObject userObject = beatmapUser.get(0).getAsJsonObject();
-		return new OsuMatch(api.getAPI(), userObject);
+		JsonObject beatmapUser = api.getRESTfulObject(API_ENDPOINT, arguments.asURLArguments());
+//		JsonObject userObject = beatmapUser.get(0).getAsJsonObject();
+		return new OsuMatch(api.getAPI(), beatmapUser);
 	}
 
 	public static class Arguments {
