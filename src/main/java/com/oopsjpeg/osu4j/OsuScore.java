@@ -44,7 +44,7 @@ public class OsuScore extends OsuElement {
 		userID = obj.get("user_id").getAsInt();
 		date = Utility.parseDate(obj.get("date").getAsString());
 		rank = obj.get("rank").getAsString();
-		pp = obj.get("pp").getAsFloat();
+		pp = obj.has("pp") ? obj.get("pp").getAsFloat() : 0;
 
 		beatmap = getAPI().beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder()
 				.setBeatmapID(beatmapID).build())
