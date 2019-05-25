@@ -2,16 +2,16 @@ package com.oopsjpeg.osu4j.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 
 public class Utility {
 
-	// peppy's server offset I'd guess
+	// osu!api dates are UTC
 	private static final DateTimeFormatter FORMATTER = new DateTimeFormatterBuilder().parseCaseInsensitive()
-			.appendPattern("u-M-d H:m:s").toFormatter().withZone(ZoneId.of("UTC+8"));
+			.appendPattern("u-M-d H:m:s").toFormatter().withZone(ZoneOffset.UTC);
 
 	public static ZonedDateTime parseDate(String dayFromApi) {
 		if (dayFromApi == null) {
