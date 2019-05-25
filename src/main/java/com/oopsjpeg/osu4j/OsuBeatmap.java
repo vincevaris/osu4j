@@ -13,6 +13,7 @@ import java.time.ZonedDateTime;
 
 public class OsuBeatmap extends OsuElement {
 	private final ApprovalState approved;
+	private final ZonedDateTime submitDate;
 	private final ZonedDateTime approvedDate;
 	private final ZonedDateTime lastUpdate;
 	private final String artist;
@@ -38,6 +39,7 @@ public class OsuBeatmap extends OsuElement {
 	private final GameMode mode;
 	private final String[] tags;
 	private final int favouriteCount;
+	private final float rating;
 	private final int playcount;
 	private final int passcount;
 	private final int maxCombo;
@@ -45,6 +47,7 @@ public class OsuBeatmap extends OsuElement {
 	public OsuBeatmap(Osu api, JsonObject obj) {
 		super(api);
 		approved = ApprovalState.fromID(obj.get("approved").getAsInt());
+		submitDate = Utility.parseDate(obj.get("submit_date").getAsString());
 		approvedDate = obj.get("approved_date").isJsonNull() ? null : Utility.parseDate(obj.get("approved_date").getAsString());
 		lastUpdate = Utility.parseDate(obj.get("last_update").getAsString());
 		artist = obj.get("artist").getAsString();
@@ -68,6 +71,7 @@ public class OsuBeatmap extends OsuElement {
 		mode = GameMode.fromID(obj.get("mode").getAsInt());
 		tags = obj.get("tags").getAsString().split(" ");
 		favouriteCount = obj.get("favourite_count").getAsInt();
+		rating = obj.get("rating").getAsFloat();
 		playcount = obj.get("playcount").getAsInt();
 		passcount = obj.get("passcount").getAsInt();
 		maxCombo = obj.get("max_combo").getAsInt();
@@ -81,6 +85,7 @@ public class OsuBeatmap extends OsuElement {
 	public OsuBeatmap(OsuBeatmap other) {
 		super(other);
 		this.approved = other.approved;
+		this.submitDate = other.submitDate;
 		this.approvedDate = other.approvedDate;
 		this.lastUpdate = other.lastUpdate;
 		this.artist = other.artist;
@@ -106,6 +111,7 @@ public class OsuBeatmap extends OsuElement {
 		this.mode = other.mode;
 		this.tags = other.tags;
 		this.favouriteCount = other.favouriteCount;
+		this.rating = other.rating;
 		this.playcount = other.playcount;
 		this.passcount = other.passcount;
 		this.maxCombo = other.maxCombo;
@@ -113,6 +119,10 @@ public class OsuBeatmap extends OsuElement {
 
 	public ApprovalState getApproved() {
 		return approved;
+	}
+
+	public ZonedDateTime getSubmitDate() {
+		return submitDate;
 	}
 
 	public ZonedDateTime getApprovedDate() {
@@ -217,6 +227,10 @@ public class OsuBeatmap extends OsuElement {
 
 	public int getFavoriteCount() {
 		return favouriteCount;
+	}
+
+	public float getRating() {
+		return rating;
 	}
 
 	public int getPlayCount() {
