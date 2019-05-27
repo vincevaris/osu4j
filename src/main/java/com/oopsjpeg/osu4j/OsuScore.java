@@ -30,7 +30,7 @@ public class OsuScore extends OsuElement {
 
 	public OsuScore(Osu api, JsonObject obj) {
 		super(api);
-		beatmapID = obj.get("beatmap_id").getAsInt();
+		beatmapID = obj.has("beatmap_id") ? obj.get("beatmap_id").getAsInt() : 0;
 		score = obj.get("score").getAsInt();
 		maxcombo = obj.get("maxcombo").getAsInt();
 		count300 = obj.get("count300").getAsInt();
@@ -48,7 +48,7 @@ public class OsuScore extends OsuElement {
 
 		beatmap = getAPI().beatmaps.getAsQuery(new EndpointBeatmaps.ArgumentsBuilder()
 				.setBeatmapID(beatmapID).build())
-				.asLazilyLoaded().map(list -> list.get(0));
+				.asLazilyLoaded().map(list -> list.stream().findFirst().orElse(null));
 
 		user = getAPI().users.getAsQuery(new EndpointUsers.ArgumentsBuilder(userID).build())
 				.asLazilyLoaded();
