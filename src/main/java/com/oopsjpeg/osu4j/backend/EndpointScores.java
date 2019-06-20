@@ -94,6 +94,16 @@ public class EndpointScores implements Endpoint<Arguments, List<OsuScore>> {
 			return this;
 		}
 
+		public ArgumentsBuilder setMods(EnumSet<GameMod> mods) {
+			this.mods = Optional.of(mods);
+			return this;
+		}
+
+		public ArgumentsBuilder unsetMods() {
+			this.mods = Optional.empty();
+			return this;
+		}
+
 		public ArgumentsBuilder setLimit(int limit) {
 			this.limit = OptionalInt.of(limit);
 			return this;
