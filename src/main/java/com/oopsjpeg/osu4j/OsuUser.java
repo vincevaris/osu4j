@@ -4,9 +4,11 @@ import com.google.gson.JsonObject;
 import com.neovisionaries.i18n.CountryCode;
 import com.oopsjpeg.osu4j.abstractbackend.LazilyLoaded;
 import com.oopsjpeg.osu4j.backend.*;
+import com.oopsjpeg.osu4j.util.Utility;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -227,6 +229,8 @@ public class OsuUser extends OsuElement {
 		private final LazilyLoaded<OsuBeatmap> beatmap;
 		private final int beatmapSetID;
 		private final LazilyLoaded<OsuBeatmapSet> beatmapSet;
+		private final ZonedDateTime date;
+		private final int epicFactor;
 
 		public Event(JsonObject obj) {
 			super(OsuUser.this.getAPI());
@@ -238,6 +242,8 @@ public class OsuUser extends OsuElement {
 			beatmapSetID = obj.get("beatmapset_id").isJsonNull() ? 0 : obj.get("beatmapset_id").getAsInt();
 			beatmapSet = getAPI().beatmapSets.getAsQuery(new EndpointBeatmapSet.Arguments(beatmapSetID))
 					.asLazilyLoaded();
+			date = obj.get("date").isJsonNull() ? null : Utility.parseDate(obj.get("date").getAsString());
+            epicFactor = obj.get("epicfactor").getAsInt();
 		}
 
 		public Event(Event other) {
@@ -247,6 +253,8 @@ public class OsuUser extends OsuElement {
 			this.beatmap = other.beatmap;
 			this.beatmapSetID = other.beatmapSetID;
 			this.beatmapSet = other.beatmapSet;
+			this.date = other.date;
+			this.epicFactor = other.epicFactor;
 		}
 
 		public OsuUser getUser() {
@@ -271,6 +279,14 @@ public class OsuUser extends OsuElement {
 
 		public LazilyLoaded<OsuBeatmapSet> getBeatmapSet() {
 			return beatmapSet;
+		}
+
+		public ZonedDateTime getDate() {
+			return date;
+		}
+
+		public int getEpicFactor() {
+			return epicFactor;
 		}
 	}
 }
