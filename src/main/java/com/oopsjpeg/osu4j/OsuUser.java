@@ -223,7 +223,7 @@ public class OsuUser extends OsuElement {
 		return obj instanceof OsuUser && ((OsuUser) obj).getID() == userID;
 	}
 
-	private class Event extends OsuElement {
+	public class Event extends OsuElement {
 		private final String displayHTML;
 		private final int beatmapID;
 		private final LazilyLoaded<OsuBeatmap> beatmap;
